@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무역 AI 프롬프트 가이드</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h1>AI 프롬프트<br>가이드</h1>
+            <p class="sidebar-subtitle">무역 실무 활용</p>
+        </div>
+        <ul class="chapter-list">
+            <li class="chapter-item active" data-chapter="1">
+                <span class="chapter-number">1장</span>
+                <span class="chapter-title">무역 AI 프롬프트의 기초</span>
+            </li>
+            <li class="chapter-item" data-chapter="2">
+                <span class="chapter-number">2장</span>
+                <span class="chapter-title">대안 접근법과 이용자 페르소나</span>
+            </li>
+            <li class="chapter-item" data-chapter="3">
+                <span class="chapter-number">3장</span>
+                <span class="chapter-title">준비 중...</span>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Mobile sidebar toggle -->
+    <button id="sidebar-toggle" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+    </button>
+
+    <!-- Main Content -->
+    <main id="content">
+
+        <!-- Chapter 1 -->
+        <article class="chapter" id="chapter-1">
+            <div class="chapter-hero">
+                <h1>1장</h1>
+                <p>무역 AI 프롬프트의 기초</p>
+            </div>
+
+            <!-- Section: 프롬프트의 3가지 유형 -->
+            <section>
+                <div class="section-title">
+                    <h2>프롬프트의 3가지 유형</h2>
+                </div>
+
+                <!-- 서술형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>서술형</h3>
+                        <div class="card-badges">
+                            <span class="badge badge-low">재사용: 낮음</span>
+                            <span class="badge badge-high">유연성: 높음</span>
+                        </div>
+                    </div>
+                    <p class="card-desc">맥락과 배경을 설명하여 AI가 상황을 이해하도록 유도</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>당신은 10년 경력의 무역 전문가입니다.
+중소기업 수출 담당자가 HS code를 처음 배우는 상황입니다.
+이 사람에게 HS code의 개념과 중요성을 설명해주세요.</code></pre>
+                    </div>
+                </div>
+
+                <!-- 지침형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>지침형</h3>
+                        <div class="card-badges">
+                            <span class="badge badge-mid">재사용: 중간</span>
+                            <span class="badge badge-mid">유연성: 중간</span>
+                        </div>
+                    </div>
+                    <p class="card-desc">단계별 절차나 명확한 규칙을 제시하여 원하는 출력을 유도</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>다음 규칙에 따라 python 코드를 작성하세요
+1. 함수명은 snake_case로 작성
+2. 각 함수의 docstring 포함
+3. 예외 처리 반드시 포함
+4. 결과는 json 형식으로 반환</code></pre>
+                    </div>
+                </div>
+
+                <!-- 함수형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>함수형</h3>
+                        <div class="card-badges">
+                            <span class="badge badge-high">재사용: 높음</span>
+                            <span class="badge badge-low">유연성: 낮음</span>
+                        </div>
+                    </div>
+                    <p class="card-desc">입력값과 출력값을 명확히 정의하여 일관된 결과를 생성</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>입력: {product_name},{hs_code},{country}
+처리: 해당 국가의 관세율 및 수입 관세 규제 조회
+출력: {
+    "관세율":"",
+    "규제상황":[],
+    "필요서류":[]
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 제로샷, 원샷, 퓨샷 -->
+            <section>
+                <div class="section-title">
+                    <h2>제로샷, 원샷, 퓨샷 프롬프팅</h2>
+                </div>
+
+                <!-- 제로샷 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>제로샷 (Zero-shot)</h3>
+                    </div>
+                    <p class="card-desc">예시 없이 바로 지시하는 방식 — 기존 예제가 없는 것</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>이 제품 정말 맘에 들어.
+
+강아지에 대해서 설명해주세요.</code></pre>
+                    </div>
+                </div>
+
+                <!-- 원샷 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>원샷 (One-shot)</h3>
+                    </div>
+                    <p class="card-desc">예시를 1개 제공하는 방식</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>감정을 분류해 주세요.
+
+예시) "배송이 너무 늦어서 실망했어요."
+감정: 부정
+
+&lt;문제&gt;
+이 제품 정말 맘에 들어요.
+감정:</code></pre>
+                    </div>
+                </div>
+
+                <!-- 퓨샷 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>퓨샷 (Few-shot)</h3>
+                    </div>
+                    <p class="card-desc">예시가 2개 이상을 제공하는 방식</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트 — 감정 분류</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>감정을 분류해주세요(긍정/부정/중립)
+
+예시)
+텍스트: "배송이 너무 늦어서 실망이야" → 부정
+텍스트: "그냥 평범한 제품이야" → 중립
+텍스트: "역대급 만족이야" → 긍정
+텍스트: "품질은 좋은데 가격이 비싸요" → 중립
+
+문제)
+텍스트: "이 제품 정말 맘에 들어"
+감정:</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시 프롬프트 — HS Code 분류</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>HS code를 분류해주세요
+
+예시)
+품목: "면으로 만든 남성용 티셔츠" → 6109.10
+품목: "폴리에스테르 소재 여성 블라우스" → 6206.40
+품목: "아동용 데님 바지" → 6203.42
+
+문제)
+품목: "울 혼방 남성 재킷"
+HS Code:</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 페르소나 패턴 -->
+            <section>
+                <div class="section-title">
+                    <h2>페르소나 패턴</h2>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Act As — 역할 부여</h3>
+                    </div>
+                    <p class="card-desc">같은 질문이라도 페르소나에 따라 완전히 다른 관점의 답변이 생성됩니다.</p>
+                    <div class="info-box">
+                        <p><strong>같은 질문:</strong> "이 계약서 검토해줘"</p>
+                        <ul>
+                            <li><strong>페르소나 없음:</strong> 일반적인 설명</li>
+                            <li><strong>변호사:</strong> 법적 리스크 중심 분석</li>
+                            <li><strong>CFO:</strong> 재무 조건 수익성 관련 분석</li>
+                            <li><strong>신입사원:</strong> 쉽고 친절한 설명</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>좋은 페르소나 4가지 구성요소</h3>
+                    </div>
+                    <div class="persona-formula">
+                        <div class="formula-item">당신은 <span class="highlight">[역할]</span>입니다</div>
+                        <div class="formula-item"><span class="highlight">[경력/배경]</span>을 가지고 있으며</div>
+                        <div class="formula-item"><span class="highlight">[전문 분야]</span>에 특화되어 있습니다</div>
+                        <div class="formula-item"><span class="highlight">[말투/태도]</span>로 응답하세요</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>관세사 페르소나</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>당신은 20년 경력의 관세사입니다
+FTA 협정 세율과 원산지 규정의 전문가로
+중소기업 무역 담당자에게 복잡한 내용을
+쉽고, 실용적으로 설명하는 것이 특기입니다.</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>비평가 페르소나</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>[비평가 페르소나]
+당신은 까다로운 개발자입니다.
+코드 리뷰 시 성능, 보안, 가독성을 엄격히 평가하며
+칭찬보다 개선점을 먼저 지적하는 스타일입니다</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>멀티 페르소나</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>[멀티 페르소나]
+다음 3명의 전문가 입장에서 우리 제품의 동남아 수출 전략을 분석해주세요.
+
+- 김부장(영업 15년, 낙관적, 현장중심)
+- 이박사(시장조사 전문, 데이터 중심, 신중함)
+- 박대표(스타트업 창업가, 속도 중시, 리스크 감수)
+
+각자의 관점에서 찬반의견을 제시하세요</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 마크다운을 이용한 프롬프트 -->
+            <section>
+                <div class="section-title">
+                    <h2>마크다운을 이용한 읽기 쉽고 명료한 프롬프트</h2>
+                </div>
+
+                <div class="card">
+                    <p class="card-desc">AI는 텍스트를 구조적으로 파싱합니다. 마크다운을 이용하면 역할, 조건, 출력 형태가 명확히 구분되어 더 정확하고 일관된 응답을 이끌어 냅니다.</p>
+                </div>
+
+                <!-- 헤더 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>1. # 헤더 — 프롬프트의 뼈대</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code># 역할
+당신은 10년 경력의 관세사입니다
+
+# 작업
+HS Code를 분류하세요
+
+# 출력형식
+JSON으로 반환</code></pre>
+                    </div>
+                </div>
+
+                <!-- 코드 블럭 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>2. ''' """ 코드 블럭 — 입력 데이터 격리</h3>
+                    </div>
+                    <p class="card-desc">AI가 지시문과 데이터를 혼동하지 않도록 입력값을 분리</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>아래 python 코드의 버그를 찾아주세요
+
+```python
+def calculate_tax(price):
+    return price*0.1
+    print("완료")  # 버그위치
+```</code></pre>
+                    </div>
+                </div>
+
+                <!-- 인용문 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>3. > 인용문 — 핵심 강조</h3>
+                    </div>
+                    <p class="card-desc">절대 지켜야 할 조건이나 중요한 맥락을 부각</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>> 반드시 한국어로만 답변하세요
+> 추측성 내용은 포함하지 마세요</code></pre>
+                    </div>
+                </div>
+
+                <!-- 목록 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>4. - 목록 — 조건과 제약 나열</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>## 제약조건
+- 답변은 500자 이내
+- 전문 용어 사용 시 괄호 안에 설명 추가
+- 불확실한 내용은 "확인 필요"로 표시
+- 예시는 반드시 무역 도메인에서 선택</code></pre>
+                    </div>
+                </div>
+
+                <!-- 표 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>5. | 표 — 입출력의 예시 구조</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>## 예시
+| 입력 품목 | HS Code | 관세율 |
+| 면티셔츠   | 6109.10 | 13%    |
+| 블라우스   | 6109.10 | 13%    |
+| 데님바지   | 6109.10 | 13%    |</code></pre>
+                    </div>
+                </div>
+
+                <!-- 굵게/기울임 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>6. **굵게** / *기울임* — 변수와 강조</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>**[분석대상]**에 대해 *반드시* 아래 순서대로 분석하세요</code></pre>
+                    </div>
+                </div>
+
+                <!-- 통합 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>통합 예시 — 역할 + 작업 + 입력 + 제약 + 출력</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>통합 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code># 역할
+당신은 중소기업 수출 컨설턴트입니다
+FTA 활용과 원산지 증명 전문가입니다
+
+# 작업
+아래 수출 품목에 대한 FTA 적용 가능 여부를 분석하세요
+
+```
+품목명: 스테인리스 주방 용품
+수출국: 한국
+수입국: 베트남
+```
+
+# 분석기준
+- 한-아세안 FTA 협정 세율 적용 여부
+- 원산지 결정 기준 충족 여부
+- 필요 서류 목록
+
+# 제약 조건
+> 확실하지 않은 세율은 반드시 "세관 확인 필요"로 표기
+
+# 출력 형식
+```json
+{
+    "FTA_적용": true/false,
+    "협정세율": "",
+    "일반세율": "",
+    "필요서류": []
+}
+```</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 표현 강도 조절 -->
+            <section>
+                <div class="section-title">
+                    <h2>글의 표현 강도와 중요도를 조절하는 방법</h2>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>강도 비교</h3>
+                    </div>
+                    <div class="strength-compare">
+                        <div class="strength-item weak">
+                            <span class="strength-label">약</span>
+                            <p>보안에 신경써주세요</p>
+                        </div>
+                        <div class="strength-arrow">→</div>
+                        <div class="strength-item strong">
+                            <span class="strength-label">강</span>
+                            <p>—에 대한 취약점을 반드시 점검하고 발견 시 즉시 수정 방안을 제시하세요</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>강도 단계별 표현</h3>
+                    </div>
+                    <div class="level-list">
+                        <div class="level-item" data-level="1">
+                            <span class="level-badge">1단계</span>
+                            <span class="level-type">권장</span>
+                            <span class="level-desc">가능하면, 되도록, ~하는 편이 좋습니다</span>
+                        </div>
+                        <div class="level-item" data-level="2">
+                            <span class="level-badge">2단계</span>
+                            <span class="level-type">일반</span>
+                            <span class="level-desc">~하세요, ~해주세요</span>
+                        </div>
+                        <div class="level-item" data-level="3">
+                            <span class="level-badge">3단계</span>
+                            <span class="level-type">강조</span>
+                            <span class="level-desc">반드시, 꼭, 항상</span>
+                        </div>
+                        <div class="level-item" data-level="4">
+                            <span class="level-badge">4단계</span>
+                            <span class="level-type">절대</span>
+                            <span class="level-desc">절대로, 어떤 경우에도, 예외 없이</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>우선순위 체계</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>강도 + 우선순위 예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>## 강도 단계별 표현
+가능하면 한국어로 답변해 주세요
+반드시 한국어로 답변해 주세요
+어떤 경우에도 영어를 사용하지 마세요
+
+## 우선순위
+최우선(절대조건)
+- 개인 정보 절대 출력하지 않는다
+- 사실과 다른 내용을 생성하지 않는다
+
+중요(일반 조건)
+- 답변은 500자 이내로 작성
+- 전문 용어 괄호 설명 추가
+
+선택(권장 조건)
+- 가능하면 실제 사례 포함
+- 표나 목록을 활용하면 더 좋다</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>다양한 톤 적용</h3>
+                    </div>
+                    <p class="card-desc">톤(말투)를 지정하면 전혀 다른 응답이 생성됩니다.</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>톤 변환 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code># 입력
+[원본]=올해 들어 회사는 큰 변화를 맞이했습니다. 이제 새로운 전략과 목표를 설정하고, 모든 직원이 함께 나아가려고 합니다.
+
+# 처리
+각각의 톤에 맞춰 [원본]글을 수정해주세요
+1. 유머러스한
+2. 감정적인
+3. 따뜻한
+4. 아이러니한
+5. 로맨틱한</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>보고서 톤 지정</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code># 보고서 작성 지시
+
+## 요약섹션
+임원 보고용: 3줄 이내, 숫자 중심, 공식적 톤
+
+## 본문섹션
+실무자용: 단계별 설명, 기술적이고 구체적 톤
+
+## 결론섹션
+전체 독자용: 행동유도, 긍정적이고 적극적인 톤</code></pre>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Chapter 2 -->
+        <article class="chapter" id="chapter-2" style="display:none;">
+            <div class="chapter-hero">
+                <h1>2장</h1>
+                <p>대안 접근법과 이용자 페르소나</p>
+            </div>
+
+            <!-- Section: 대안 접근법 패턴 -->
+            <section>
+                <div class="section-title">
+                    <h2>대안 접근법 패턴</h2>
+                </div>
+
+                <div class="card">
+                    <p class="card-desc">모든 대안과 해결책 찾아보기</p>
+                    <div class="info-box">
+                        <ul>
+                            <li><strong>일반 프롬프트:</strong> 어떻게 하면 좋을까? → AI가 임의로 하나 선택</li>
+                            <li><strong>대안 패턴:</strong> 모든 방법을 나열하고 각각의 장단점을 비교해줘 → 선택권이 사람에게 돌아옴</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>일반 vs 대안 패턴 비교</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>비교 예시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>[일반]
+python에서 엑셀 파일을 읽고 싶어
+→ openpyxl 사용
+
+[대안 패턴 적용]
+방법1: pandas
+방법2: openpyxl
+방법3: xlrd
+방법4: CSV로 변환</code></pre>
+                    </div>
+                </div>
+
+                <!-- 유형1: 단순 나열형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>유형 1: 단순 나열형</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>단순 나열형 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code># 지시
+아래 문제를 해결하는 방법을 최소 4가지를 제시하세요
+각 방법은 아래 형식으로 작성하세요
+
+## 방법 {번호}: {이름}
+- 핵심원리: {한줄}
+- 적합한 상황: {언제 쓰면 좋은가}
+- 단점: {주의할 점}
+- 난이도: {초급/중급/고급}
+
+# 문제
+수출통관 서류를 자동으로 생성하고 싶습니다.</code></pre>
+                    </div>
+                </div>
+
+                <!-- 유형2: 축 기반 비교형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>유형 2: 축 기반 비교형</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>축 기반 비교형 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>아래 4가지 방법을 다른 기준으로 비교 분석하세요
+
+평가기준:
+- 개발 속도(빠름/보통/느림)
+- 유지 보수 난이도(쉬움/보통/어려움)
+- 비용(무료/저비용/고비용)
+- 확장성(높음/보통/낮음)
+
+비교 대상: FASTAPI, DJANGO, FLASK, NODE.JS EXPRESS
+용도: 무역 데이터 처리 REST API 서버</code></pre>
+                    </div>
+                </div>
+
+                <!-- 유형3: 상황별 분기형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>유형 3: 상황별 분기형</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>상황별 분기형 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>아래 상황별 가장 적합한 데이터 베이스를 추천하세요
+각 상황은 독립적으로 판단하세요
+
+상황 A: 스타트업, 개발자 1명, 빠른 MVP
+상황 B: 무역 데이터 10년치, 복잡한 통계쿼리
+상황 C: 실시간 환율, 가격 데이터, 초당 1000건 업데이트
+상황 D: 문서 형태의 비정형 통관 데이터 저장
+
+각 상황에 대해:
+1순위 추천: {DB명} - {이유 한 줄 설명}
+2순위 추천: {DB명} - {이유 한 줄 설명}</code></pre>
+                    </div>
+                </div>
+
+                <!-- 유형4: 역발상 대안형 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>유형 4: 역발상 대안형</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>역발상 대안형 프롬프트</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>아래 문제에 대해 일반적인 해결책뿐 아니라
+"하지 않는" 선택지와 "문제 자체를 재정의"하는 방법도
+대안으로 포함하여 총 5가지 제시하세요.
+
+문제: 수입 통관 처리 시간이 너무 오래 걸린다</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 이용자 페르소나 패턴 -->
+            <section>
+                <div class="section-title">
+                    <h2>이용자 페르소나 패턴</h2>
+                </div>
+
+                <div class="card">
+                    <p class="card-desc">대상에 특화된 맞춤형 답변 유도하기</p>
+                    <div class="info-box">
+                        <ul>
+                            <li><strong>기존 페르소나 패턴:</strong> AI의 역할 정의</li>
+                            <li><strong>이용자 페르소나:</strong> 이 답변을 듣는 사람은 ~~입니다.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>이용자별 답변 차이</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>같은 질문, 다른 이용자</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>질문: "블록체인"이 무역금융에 어떻게 활용되나요?
+
+이용자1: 무역을 처음 배우는 대학생
+이용자2: 중소기업 수출 담당 팀장
+이용자3: 금융기관 IT 의사결정자</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>상세 이용자 프로필 활용</h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>이용자 프로필 + 지시</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code># 이용자 정보
+- 직책: 중소기업 대표(제조업, 직원 30명)
+- 수출경험: 국내 영업만 10년, 해외 수출 처음
+- 관심사: 리스크 최소화, 빠른 실행
+- 우려: "복잡하고 어려울 것 같다"는 막연한 두려움
+- 시간: 바빠서 긴 글을 읽지 않음
+
+# 지시
+위의 이용자에게 첫 수출 준비 3단계를 설명하세요
+전문 용어는 최소화하고, 각 단계는 3줄 이내로 작성하세요</code></pre>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Chapter 3 -->
+        <article class="chapter" id="chapter-3" style="display:none;">
+            <div class="chapter-hero">
+                <h1>3장</h1>
+                <p>준비 중</p>
+            </div>
+            <section>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>콘텐츠 준비 중</h3>
+                    </div>
+                    <p class="card-desc">3장의 내용이 곧 추가될 예정입니다.</p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
