@@ -169,7 +169,11 @@ async function aiSearch() {
         return;
     }
 
-    if (typeof OPENAI_API_KEY === 'undefined' || OPENAI_API_KEY === 'your-api-key-here') {
+    // Check if API key is available (local dev) or Netlify Function (production)
+    const hasLocalKey = typeof OPENAI_API_KEY !== 'undefined' && OPENAI_API_KEY !== 'your-api-key-here';
+    const isNetlify = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !window.location.protocol.startsWith('file');
+
+    if (!hasLocalKey && !isNetlify) {
         status.textContent = 'API 키가 설정되지 않았습니다. js/config.js 파일에 OpenAI API 키를 입력하세요.';
         status.className = 'search-error';
         return;
@@ -200,30 +204,47 @@ async function aiSearch() {
 섹션 목록:
 ${sectionList}`;
 
+    const messages = [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: query }
+    ];
+
     try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`
-            },
-            body: JSON.stringify({
-                model: 'gpt-4o-mini',
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: query }
-                ],
-                max_tokens: 10,
-                temperature: 0
-            })
-        });
+        let data;
 
-        if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.error?.message || `API 오류 (${response.status})`);
+        if (hasLocalKey) {
+            // Local development: call OpenAI directly
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${OPENAI_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini',
+                    messages,
+                    max_tokens: 10,
+                    temperature: 0
+                })
+            });
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error?.message || `API 오류 (${response.status})`);
+            }
+            data = await response.json();
+        } else {
+            // Production: call Netlify Function (API key is server-side)
+            const response = await fetch('/.netlify/functions/ai-search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages })
+            });
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || `서버 오류 (${response.status})`);
+            }
+            data = await response.json();
         }
-
-        const data = await response.json();
         const rawAnswer = data.choices[0].message.content.trim();
         console.log('[AI Search] 원본 응답:', rawAnswer);
 

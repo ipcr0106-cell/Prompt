@@ -685,9 +685,14 @@ section {
         margin-left: 0;
     }
 
-    /* Search bar mobile */
+    /* Sidebar header: make room for toggle button */
+    .sidebar-header {
+        padding-top: 68px;
+    }
+
+    /* Search bar mobile: make room for toggle button */
     #search-bar {
-        padding: 10px 12px;
+        padding: 10px 12px 10px 68px;
         position: sticky;
         top: 0;
     }

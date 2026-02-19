@@ -1134,7 +1134,8 @@ STEP N. {행동}
         </article>
     </main>
 
-    <script src="js/config.js"></script>
+    <!-- config.js는 로컬 개발용 (gitignore 대상). 배포 시 없으면 Netlify Function 사용 -->
+    <script src="js/config.js" onerror="console.log('config.js 없음 → Netlify Function 모드')"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
