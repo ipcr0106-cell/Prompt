@@ -155,18 +155,20 @@ body {
     margin-left: var(--sidebar-width);
     flex: 1;
     min-height: 100vh;
+    padding-top: 76px;
 }
 
 /* ===== Search Bar ===== */
 #search-bar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: var(--sidebar-width);
+    right: 0;
     z-index: 50;
     background: rgba(248, 250, 252, 0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 16px 40px;
-    max-width: 100%;
 }
 
 .search-container {
@@ -859,6 +861,7 @@ section {
         margin-left: 0;
         width: 100%;
         max-width: 100vw;
+        padding-top: 56px;
     }
 
     /* Sidebar header: make room for toggle button */
@@ -866,11 +869,10 @@ section {
         padding-top: 68px;
     }
 
-    /* Search bar mobile: make room for toggle button */
+    /* Search bar mobile: override left for no sidebar */
     #search-bar {
+        left: 0;
         padding: 10px 8px 10px 64px;
-        position: sticky;
-        top: 0;
     }
 
     .search-container {
@@ -901,16 +903,22 @@ section {
 
     /* Generate button: icon only on mobile */
     #generate-btn {
+        width: 36px;
+        min-width: 36px;
         height: 36px;
-        padding: 0 9px;
+        padding: 0;
         font-size: 0;
         border-radius: 8px;
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #generate-btn svg {
         width: 18px;
         height: 18px;
+        flex-shrink: 0;
     }
 
     /* Popup mobile */
