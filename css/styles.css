@@ -872,7 +872,7 @@ section {
     /* Search bar mobile: override left for no sidebar */
     #search-bar {
         left: 0;
-        padding: 10px 8px 10px 64px;
+        padding: 10px 52px 10px 64px;
     }
 
     .search-container {
@@ -901,15 +901,17 @@ section {
         flex-shrink: 0;
     }
 
-    /* Generate button: icon only on mobile */
+    /* Generate button: pull out of container, show on the right */
     #generate-btn {
+        position: absolute;
+        right: 8px;
+        top: 12px;
         width: 36px;
         min-width: 36px;
         height: 36px;
         padding: 0;
         font-size: 0;
         border-radius: 8px;
-        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -918,7 +920,6 @@ section {
     #generate-btn svg {
         width: 18px;
         height: 18px;
-        flex-shrink: 0;
     }
 
     /* Popup mobile */
