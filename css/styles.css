@@ -26,6 +26,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -36,6 +37,7 @@ body {
     display: flex;
     min-height: 100vh;
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* ===== Sidebar ===== */
@@ -855,6 +857,8 @@ section {
 
     #content {
         margin-left: 0;
+        width: 100%;
+        max-width: 100vw;
     }
 
     /* Sidebar header: make room for toggle button */
