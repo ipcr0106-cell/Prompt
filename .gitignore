@@ -1,0 +1,16 @@
+# API Key (절대 Git에 올리지 마세요)
+js/config.js
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (혹시 나중에 사용할 경우)
+node_modules/
