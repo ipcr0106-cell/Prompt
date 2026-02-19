@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>무역 AI 프롬프트 가이드</title>
+    <link rel="icon" type="image/jpeg" href="prompt_favicon.jpeg">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,8 +49,31 @@
                 <button id="search-btn" onclick="aiSearch()">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
+                <button id="generate-btn" onclick="aiGenerate()" title="프롬프트 생성">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+                    생성
+                </button>
             </div>
             <div id="search-status"></div>
+        </div>
+
+        <!-- Prompt Generate Popup -->
+        <div id="generate-overlay" onclick="closeGeneratePopup()"></div>
+        <div id="generate-popup">
+            <div class="popup-header">
+                <h3>생성된 프롬프트</h3>
+                <button class="popup-close" onclick="closeGeneratePopup()">&times;</button>
+            </div>
+            <div class="popup-body">
+                <div id="generate-loading" style="display:none;">프롬프트를 생성하고 있습니다...</div>
+                <pre id="generate-result"></pre>
+            </div>
+            <div class="popup-footer">
+                <button class="popup-copy-btn" onclick="copyGenerated()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    복사
+                </button>
+            </div>
         </div>
 
         <!-- Chapter 1 -->

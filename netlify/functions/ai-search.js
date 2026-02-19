@@ -13,7 +13,10 @@ exports.handler = async (event) => {
     }
 
     try {
-        const { messages } = JSON.parse(event.body);
+        const body = JSON.parse(event.body);
+        const messages = body.messages;
+        const max_tokens = Math.min(body.max_tokens || 10, 2000);
+        const temperature = body.max_tokens ? 0.7 : 0;
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -24,8 +27,8 @@ exports.handler = async (event) => {
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages,
-                max_tokens: 10,
-                temperature: 0
+                max_tokens,
+                temperature
             })
         });
 

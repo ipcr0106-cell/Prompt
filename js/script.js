@@ -59,6 +59,7 @@ const SECTION_MAP = [
 
 // ===== Prompt Examples Index (페이지 로드 시 동적 수집) =====
 let promptExamples = [];
+let lastSearchResult = null; // Store last search result for generate
 
 function collectPromptExamples() {
     promptExamples = [];
@@ -293,15 +294,160 @@ ${sectionList}`;
         window.scrollTo({ top: offset, behavior: 'smooth' });
 
         const exampleLabel = sectionExamples.length > 0 ? sectionExamples[0].label : '';
+        const exampleContent = sectionExamples.length > 0 ? sectionExamples[0].content : '';
         const labelText = exampleLabel ? ` — "${exampleLabel}"` : '';
         status.innerHTML = `<strong>"${matchedSection.title}"</strong> 패턴을 추천합니다.${labelText}`;
         status.className = 'search-success';
+
+        // Save for generate
+        lastSearchResult = {
+            query,
+            section: matchedSection,
+            exampleContent
+        };
 
     } catch (err) {
         console.error('[AI Search] 오류:', err);
         status.textContent = `오류: ${err.message}`;
         status.className = 'search-error';
     }
+}
+
+// ===== Generate Prompt =====
+async function aiGenerate() {
+    const input = document.getElementById('search-input');
+    const status = document.getElementById('search-status');
+    const query = input.value.trim();
+
+    if (!query) {
+        status.textContent = '먼저 검색어를 입력해주세요.';
+        status.className = 'search-error';
+        return;
+    }
+
+    // If no search result yet, run search first then generate
+    if (!lastSearchResult || lastSearchResult.query !== query) {
+        await aiSearch();
+        if (!lastSearchResult || lastSearchResult.query !== query) return;
+    }
+
+    const hasLocalKey = typeof OPENAI_API_KEY !== 'undefined' && OPENAI_API_KEY !== 'your-api-key-here';
+
+    // Show popup with loading
+    openGeneratePopup();
+    const loading = document.getElementById('generate-loading');
+    const result = document.getElementById('generate-result');
+    loading.style.display = 'block';
+    result.textContent = '';
+
+    const generatePrompt = `당신은 프롬프트 엔지니어링 전문가입니다.
+
+사용자가 처리하고 싶은 업무: "${query}"
+
+아래는 이 업무에 적합한 프롬프트 패턴 정보입니다:
+- 패턴명: ${lastSearchResult.section.title}
+- 패턴 설명: ${lastSearchResult.section.description}
+${lastSearchResult.exampleContent ? `- 참고 예시:\n${lastSearchResult.exampleContent}` : ''}
+
+위 패턴의 구조와 접근법을 활용하여, 사용자의 업무("${query}")에 맞는 실용적인 프롬프트를 생성해주세요.
+
+규칙:
+- 참고 예시의 구조/패턴만 활용하고, 내용은 사용자의 업무에 맞게 완전히 새로 작성
+- 바로 AI에 붙여넣기 할 수 있는 완성된 프롬프트만 출력
+- 설명이나 부가 텍스트 없이 프롬프트 본문만 반환
+- 한국어로 작성`;
+
+    const messages = [
+        { role: 'system', content: generatePrompt },
+        { role: 'user', content: `"${query}" 업무를 위한 프롬프트를 생성해주세요.` }
+    ];
+
+    try {
+        let data;
+
+        if (hasLocalKey) {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${OPENAI_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini',
+                    messages,
+                    max_tokens: 1000,
+                    temperature: 0.7
+                })
+            });
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error?.message || `API 오류 (${response.status})`);
+            }
+            data = await response.json();
+        } else {
+            const response = await fetch('/.netlify/functions/ai-search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages, max_tokens: 1000 })
+            });
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || `서버 오류 (${response.status})`);
+            }
+            data = await response.json();
+        }
+
+        loading.style.display = 'none';
+        result.textContent = data.choices[0].message.content.trim();
+
+    } catch (err) {
+        console.error('[AI Generate] 오류:', err);
+        loading.style.display = 'none';
+        result.textContent = `오류: ${err.message}`;
+    }
+}
+
+function openGeneratePopup() {
+    document.getElementById('generate-overlay').classList.add('active');
+    document.getElementById('generate-popup').classList.add('active');
+}
+
+function closeGeneratePopup() {
+    document.getElementById('generate-overlay').classList.remove('active');
+    document.getElementById('generate-popup').classList.remove('active');
+}
+
+function copyGenerated() {
+    const text = document.getElementById('generate-result').textContent;
+    const btn = document.querySelector('.popup-copy-btn');
+
+    navigator.clipboard.writeText(text).then(() => {
+        showPopupCopied(btn);
+    }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showPopupCopied(btn);
+        } catch (err) {
+            console.error('복사 실패:', err);
+        }
+        document.body.removeChild(textArea);
+    });
+}
+
+function showPopupCopied(btn) {
+    const original = btn.innerHTML;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 완료!`;
+    btn.classList.add('copied');
+    setTimeout(() => {
+        btn.innerHTML = original;
+        btn.classList.remove('copied');
+    }, 2000);
 }
 
 // ===== Copy Code =====
