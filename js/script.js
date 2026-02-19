@@ -156,6 +156,17 @@ document.addEventListener('DOMContentLoaded', () => {
             aiSearch();
         }
     });
+
+    // Responsive placeholder
+    const fullPlaceholder = '어떤 업무를 처리하고 싶으세요? (예: 여행 일정, 비교 분석, 전문가 상담, 코드 리뷰...)';
+    const shortPlaceholder = '업무를 입력하세요 (예: 여행 일정, 비교 분석...)';
+
+    function updatePlaceholder() {
+        searchInput.placeholder = window.innerWidth <= 768 ? shortPlaceholder : fullPlaceholder;
+    }
+
+    updatePlaceholder();
+    window.addEventListener('resize', updatePlaceholder);
 });
 
 // ===== AI Search (섹션 설명 기반 매칭 + 코드 블록 이동) =====
