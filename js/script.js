@@ -1,6 +1,11 @@
 // ===== Section Map (섹션 설명 기반 매칭) =====
 const SECTION_MAP = [
     {
+        id: 'sec-five-keys',
+        title: 'AI 프롬프트 작성의 5가지 열쇠',
+        description: '명확한 지시(Point of View), 배경 정보 제공(Context), 샘플 보여주기, 업무 쪼개기, AI를 파트너로 대하기. 프롬프트 작성의 기본 원칙, 좋은 질문과 나쁜 질문의 차이, Before-After 비교.'
+    },
+    {
         id: 'sec-prompt-types',
         title: '프롬프트의 3가지 유형 (서술형, 지침형, 함수형)',
         description: '상황 설명이 필요할 때(서술형), 단계별 규칙이나 절차를 지시할 때(지침형), 입력-출력 형식을 고정하여 반복 사용할 때(함수형). 기본적인 프롬프트 작성법, AI에게 처음 질문하는 방법, 업무 자동화 템플릿 만들기.'
@@ -28,7 +33,7 @@ const SECTION_MAP = [
     {
         id: 'sec-alternatives',
         title: '대안 접근법 패턴',
-        description: '하나의 답이 아닌 여러 대안을 비교 분석. 단순 나열형, 축 기반 비교형(비용/속도/확장성 등), 상황별 분기형, 역발상 대안형. 기술 선택, 솔루션 비교, 도구 선택, 방법론 비교, 의사결정 지원. 여행지 비교, 제품 비교, 학습 방법 비교 등.'
+        description: '하나의 답이 아닌 여러 대안을 비교 분석. 단순 나열형, 축 기반 비교형(비용/속도/확장성 등), 상황별 분기형, 역발상 대안형. 기술 선택, 솔루션 비교, 도구 선택, 방법론 비교, 의사결정 지원.'
     },
     {
         id: 'sec-user-persona',
@@ -38,7 +43,7 @@ const SECTION_MAP = [
     {
         id: 'sec-recipe',
         title: '레시피 패턴 (단계별 절차)',
-        description: '목표 달성을 위한 순서화된 행동 지침. 기본 단계 레시피, 분기 포함 레시피, 체크리스트형. 프로젝트 실행 계획, 업무 절차 정리, 학습 로드맵, 여행 일정 짜기, 요리 레시피, 운동 계획, 이사 준비, 행사 준비 등 순서가 중요한 모든 작업.'
+        description: '목표 달성을 위한 순서화된 행동 지침. 기본 단계 레시피, 분기 포함 레시피, 체크리스트형. 프로젝트 실행 계획, 업무 절차 정리, 학습 로드맵, 여행 일정 짜기, 요리 레시피, 운동 계획, 이사 준비, 행사 준비 등.'
     },
     {
         id: 'sec-flipped',
@@ -48,71 +53,208 @@ const SECTION_MAP = [
     {
         id: 'sec-cognitive',
         title: '인지 검증자 패턴',
-        description: '복잡한 질문을 하위 질문으로 분해하여 단계적으로 검증. 의사결정, 타당성 분석, 전략 수립, 기술 검토. 하나의 큰 질문에 바로 답하지 않고 분해→검증→통합으로 정확도 향상.'
+        description: '복잡한 질문을 하위 질문으로 분해하여 단계적으로 검증. 의사결정, 타당성 분석, 전략 수립, 기술 검토. 분해→검증→통합으로 정확도 향상.'
     },
     {
         id: 'sec-game',
         title: '게임 플레이 패턴',
-        description: '게임 형식으로 학습이나 연습을 유도. 퀴즈, 시뮬레이션, 롤플레이, 시나리오 연습.'
+        description: '게임 형식으로 학습이나 시뮬레이션 유도. 텍스트 어드벤처, 롤플레이, 스토리텔링, 퀴즈 게임. 어린이 교육, 직원 훈련, 언어 학습, 협상 시뮬레이션.'
+    },
+    {
+        id: 'sec-question-improve',
+        title: '질문 개선 패턴',
+        description: 'AI가 사용자의 질문을 더 나은 질문으로 업그레이드. 모호한 질문을 명확하게, 잘못된 전제 교정, 다방향 버전 제시. 원하는 답변을 못 받을 때, 질문이 너무 광범위할 때.'
+    },
+    {
+        id: 'sec-factcheck',
+        title: '팩트체크 목록 패턴',
+        description: '검증이 필요한 항목을 스스로 추출하고 목록화. 신뢰도 점수 부여, 위험도별 분류(🔴🟡🟢). 법률/세금/규정 관련 정보, 수치 데이터, 변경 가능성이 있는 정보 검증.'
+    },
+    {
+        id: 'sec-metalang',
+        title: '메타언어 생성 패턴 (단축어)',
+        description: '/요약, /코드, /비교 같은 나만의 단축 명령어를 정의하여 반복 작업을 간단하게 실행. 자주 쓰는 지시를 코드화, 일관된 출력 형식 유지.'
+    },
+    {
+        id: 'sec-reflection',
+        title: '리플렉션 패턴 (자기성찰)',
+        description: 'AI가 초안 작성 → 스스로 비평 → 개선본 출력. 품질 기준 평가(명확성/완결성/정확성/실용성). 보고서, 코드, 이메일, 계획서 등 중요 문서의 품질 향상.'
+    },
+    {
+        id: 'sec-outline',
+        title: '아웃라인 확장 패턴',
+        description: '큰 주제의 뼈대(아웃라인)를 먼저 잡고 점진적으로 살을 붙이는 방식. 교육 과정 설계, 책 목차 작성, 프로젝트 계획, 강의 스크립트 작성.'
+    },
+    {
+        id: 'sec-context-manager',
+        title: '컨텍스트 관리자 패턴',
+        description: '대화 전체에 적용되는 상황/목적/제약을 선언하여 일관된 맞춤형 답변 유도. 회사 환경, 기술 수준, 예산 제약을 미리 설정.'
+    },
+    {
+        id: 'sec-infinite-gen',
+        title: '무한 생성 패턴',
+        description: '고정 프레임과 변수를 정의하여 다양한 조합의 결과물을 반복 생성. 이메일 템플릿, 보고서, 마케팅 문구, 더미 데이터 생성.'
+    },
+    {
+        id: 'sec-5w1h',
+        title: '5W1H 프레임워크',
+        description: 'Who/What/When/Where/Why/How를 구조적으로 입력하여 체계적인 전략 보고서 생성. 시장 진입 전략, 사업 기획, 컨설팅 보고서.'
+    },
+    {
+        id: 'sec-costar',
+        title: 'CO-STAR 프레임워크',
+        description: 'Context/Objective/Style/Tone/Audience/Response — 프롬프트 엔지니어링 대회 1등 전략. 비즈니스 제안서, 영업 문서, 마케팅 카피 작성에 최적.'
+    },
+    {
+        id: 'sec-focus',
+        title: 'FOCUS 프레임워크',
+        description: 'Function/Objective/Context/Utility/Specifications — 바이어 발굴, LinkedIn 메시지, 영업 캠페인, 맞춤형 비즈니스 커뮤니케이션.'
+    },
+    {
+        id: 'sec-roses',
+        title: 'ROSES 프레임워크',
+        description: 'Role/Objective/Scenario/Expected Solution/Steps — 협상 전략, 분쟁 해결, 단계별 액션 플랜이 필요한 복잡한 비즈니스 상황.'
+    },
+    {
+        id: 'sec-bab',
+        title: 'BAB 프레임워크',
+        description: 'Before/After/Bridge — 변화 스토리텔링 구조. 성공 사례 작성, 마케팅 스토리, 제안서의 문제→해결→방법 서술.'
+    },
+    {
+        id: 'sec-multi-perspective',
+        title: '다중 관점 기법',
+        description: '여러 이해관계자/전문 분야/시간 레이어로 동시 분석. 의사결정, 갈등 분석, 전략 수립. 충돌 지점→진짜 문제, 동의 지점→확실한 진실, 보완 지점→완전한 해결책.'
+    },
+    {
+        id: 'sec-cot',
+        title: 'CoT 기법 (Chain of Thought)',
+        description: '복잡한 문제를 단계별로 추론. 중간 사고 과정을 보여주며 정확도 향상. 의사결정, 수학적 추론, 전략 분석, 논리적 판단이 필요한 모든 작업.'
+    },
+    {
+        id: 'sec-ape',
+        title: 'APE — 자동 프롬프트 최적화',
+        description: 'AI가 스스로 프롬프트 후보 생성→평가→최적화. 반복 사용할 프롬프트 품질 개선, 코딩 프롬프트 최적화, 이메일/문서 생성 자동화.'
     }
 ];
 
-// ===== Prompt Examples Index (페이지 로드 시 동적 수집) =====
-let promptExamples = [];
-let lastSearchResult = null; // Store last search result for generate
-
-function collectPromptExamples() {
-    promptExamples = [];
-    const codeBlocks = document.querySelectorAll('.code-block');
-    codeBlocks.forEach((block, index) => {
-        const label = block.querySelector('.code-header > span')?.textContent || '';
-        const code = block.querySelector('code')?.textContent || '';
-        // Find which section this code block belongs to
-        const section = block.closest('section');
-        const sectionId = section ? section.id : '';
-        if (code.trim()) {
-            promptExamples.push({
-                index,
-                label,
-                content: code.trim().substring(0, 300),
-                element: block,
-                sectionId
-            });
-        }
-    });
-}
 
 // ===== Chapter Navigation (Scroll-based) =====
 document.addEventListener('DOMContentLoaded', () => {
     const chapterItems = document.querySelectorAll('.chapter-item');
-    const chapters = document.querySelectorAll('.chapter');
+    // Include intro-page so it's detected by scroll spy
+    const chapters = document.querySelectorAll('.chapter, .intro-page');
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const searchInput = document.getElementById('search-input');
-
-    // Collect all prompt examples from the page
-    collectPromptExamples();
 
     // Create overlay for mobile
     const overlay = document.createElement('div');
     overlay.className = 'sidebar-overlay';
     document.body.appendChild(overlay);
 
+    // Build sub-navigation from DOM sections
+    const chapterSections = {};
+    document.querySelectorAll('article[id^="chapter-"]').forEach(article => {
+        const chapterId = article.id.replace('chapter-', '');
+        const sections = [];
+        article.querySelectorAll('section[id]').forEach(sec => {
+            const titleEl = sec.querySelector('.section-title h2');
+            if (titleEl) {
+                sections.push({ id: sec.id, title: titleEl.textContent.trim() });
+            }
+        });
+        chapterSections[chapterId] = sections;
+    });
+
+    // Inject sub-lists into sidebar chapter items
+    chapterItems.forEach(item => {
+        const chapterId = item.dataset.chapter;
+        const sections = chapterSections[chapterId] || [];
+        if (sections.length === 0) return;
+
+        const subList = document.createElement('ul');
+        subList.className = 'chapter-sub-list';
+        sections.forEach(sec => {
+            const li = document.createElement('li');
+            li.className = 'chapter-sub-item';
+            li.dataset.sectionId = sec.id;
+            li.textContent = sec.title;
+            li.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const target = document.getElementById(sec.id);
+                if (target) {
+                    const searchBarH = document.getElementById('search-bar')?.offsetHeight || 80;
+                    const offset = target.offsetTop - searchBarH - 8;
+                    window.scrollTo({ top: offset, behavior: 'smooth' });
+                }
+                closeSidebar();
+            });
+            subList.appendChild(li);
+        });
+        item.appendChild(subList);
+    });
+
+    // Flag to pause scroll spy during programmatic scrolling
+    let scrollingByClick = false;
+    let scrollEndTimer = null;
+
+    function onScrollEnd() {
+        clearTimeout(scrollEndTimer);
+        scrollEndTimer = setTimeout(() => {
+            scrollingByClick = false;
+            window.removeEventListener('scroll', onScrollEnd);
+            updateActiveChapter();
+        }, 120);
+    }
+
+    // Scroll sidebar to keep active item visible
+    function scrollSidebarToActive() {
+        const activeSubItem = sidebar.querySelector('.chapter-sub-item.active');
+        const activeChapterItem = sidebar.querySelector('.chapter-item.active');
+        const target = activeSubItem || activeChapterItem;
+        if (!target) return;
+
+        const targetRect = target.getBoundingClientRect();
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const padding = 24;
+
+        if (targetRect.top < sidebarRect.top + padding) {
+            sidebar.scrollBy({ top: targetRect.top - sidebarRect.top - padding, behavior: 'smooth' });
+        } else if (targetRect.bottom > sidebarRect.bottom - padding) {
+            sidebar.scrollBy({ top: targetRect.bottom - sidebarRect.bottom + padding, behavior: 'smooth' });
+        }
+    }
+
     // Click sidebar item -> scroll to that chapter
     chapterItems.forEach(item => {
         item.addEventListener('click', () => {
+            // Immediately activate clicked chapter so sub-list opens at once
+            chapterItems.forEach(ci => ci.classList.remove('active'));
+            item.classList.add('active');
+            // Scroll sidebar so sub-list is visible after opening
+            setTimeout(scrollSidebarToActive, 50);
+
+            // Pause scroll spy; re-enable only after scroll fully stops
+            scrollingByClick = true;
+            clearTimeout(scrollEndTimer);
+            window.removeEventListener('scroll', onScrollEnd);
+            window.addEventListener('scroll', onScrollEnd, { passive: true });
+
             const chapterId = item.dataset.chapter;
             const target = document.getElementById(`chapter-${chapterId}`);
             if (target) {
-                const offset = target.offsetTop - 80;
+                const searchBarH = document.getElementById('search-bar')?.offsetHeight || 80;
+                const offset = target.offsetTop - searchBarH - 8;
                 window.scrollTo({ top: offset, behavior: 'smooth' });
             }
             closeSidebar();
         });
     });
 
-    // Scroll spy
+    // Scroll spy: chapter + active section
     function updateActiveChapter() {
+        if (scrollingByClick) return;
+
         let currentChapter = null;
         chapters.forEach(ch => {
             const rect = ch.getBoundingClientRect();
@@ -120,12 +262,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentChapter = ch;
             }
         });
-        if (currentChapter) {
-            const id = currentChapter.id.replace('chapter-', '');
-            chapterItems.forEach(ci => {
-                ci.classList.toggle('active', ci.dataset.chapter === id);
-            });
-        }
+
+        if (!currentChapter) return;
+
+        const activeId = currentChapter.id.replace('chapter-', '');
+        chapterItems.forEach(ci => {
+            ci.classList.toggle('active', ci.dataset.chapter === activeId);
+        });
+
+        // Update active sub-item
+        let currentSection = null;
+        currentChapter.querySelectorAll('section[id]').forEach(sec => {
+            const rect = sec.getBoundingClientRect();
+            if (rect.top <= 150) {
+                currentSection = sec;
+            }
+        });
+
+        document.querySelectorAll('.chapter-sub-item').forEach(item => {
+            item.classList.toggle('active',
+                !!(currentSection && item.dataset.sectionId === currentSection.id)
+            );
+        });
+
+        scrollSidebarToActive();
     }
 
     window.addEventListener('scroll', updateActiveChapter, { passive: true });
@@ -150,178 +310,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Enter key in search input
+    // Ctrl+Enter in search input → generate
     searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            aiSearch();
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            aiGenerate();
         }
     });
-
-    // Responsive placeholder
-    const fullPlaceholder = '어떤 업무를 처리하고 싶으세요? (예: 여행 일정, 비교 분석, 전문가 상담, 코드 리뷰...)';
-    const shortPlaceholder = '업무를 입력하세요 (예: 여행 일정, 비교 분석...)';
-
-    function updatePlaceholder() {
-        searchInput.placeholder = window.innerWidth <= 768 ? shortPlaceholder : fullPlaceholder;
-    }
-
-    updatePlaceholder();
-    window.addEventListener('resize', updatePlaceholder);
 });
 
-// ===== AI Search (섹션 설명 기반 매칭 + 코드 블록 이동) =====
-async function aiSearch() {
-    const input = document.getElementById('search-input');
-    const status = document.getElementById('search-status');
-    const query = input.value.trim();
+// ===== Unlock Keys =====
+function unlockKeys() {
+    const keyUnlock = document.getElementById('key-unlock');
+    const keysGrid = document.getElementById('keys-grid');
+    if (!keyUnlock || !keysGrid) return;
 
-    if (!query) {
-        status.textContent = '검색어를 입력해주세요.';
-        status.className = 'search-error';
-        return;
-    }
-
-    // Check if API key is available (local dev) or Netlify Function (production)
-    const hasLocalKey = typeof OPENAI_API_KEY !== 'undefined' && OPENAI_API_KEY !== 'your-api-key-here';
-    const isNetlify = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !window.location.protocol.startsWith('file');
-
-    if (!hasLocalKey && !isNetlify) {
-        status.textContent = 'API 키가 설정되지 않았습니다. js/config.js 파일에 OpenAI API 키를 입력하세요.';
-        status.className = 'search-error';
-        return;
-    }
-
-    status.textContent = 'AI가 최적의 프롬프트 패턴을 찾고 있습니다...';
-    status.className = 'search-loading';
-
-    // Build section description list for AI matching
-    const sectionList = SECTION_MAP
-        .map((sec, i) => `[${i}] "${sec.title}"\n설명: ${sec.description}`)
-        .join('\n---\n');
-
-    const systemPrompt = `당신은 프롬프트 엔지니어링 가이드 도우미입니다.
-
-아래는 프롬프트 패턴/기법 섹션 목록입니다. 각 섹션은 [번호], 제목, 설명으로 구성되어 있습니다.
-
-사용자가 처리하고 싶은 업무나 작업을 설명하면, 아래 섹션 중에서 그 업무에 가장 적합한 프롬프트 패턴의 번호를 골라주세요.
-
-중요한 판단 기준:
-- 섹션의 "설명"에 포함된 활용 사례와 사용자의 업무가 얼마나 잘 맞는지 판단하세요
-- 예시가 무역 관련이더라도, 프롬프트 패턴 자체는 모든 분야에 적용 가능합니다
-- "여행 일정 짜기"는 레시피 패턴(단계별 절차), "제품 비교"는 대안 접근법, "전문가 상담"은 페르소나 패턴 등으로 매칭하세요
-- 사용자의 업무 성격(비교, 단계별 절차, 역할극, 분류, 구조화 등)에 맞는 패턴을 추천하세요
-
-반드시 숫자 하나만 반환하세요. 다른 텍스트는 포함하지 마세요.
-
-섹션 목록:
-${sectionList}`;
-
-    const messages = [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: query }
-    ];
-
-    try {
-        let data;
-
-        if (hasLocalKey) {
-            // Local development: call OpenAI directly
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${OPENAI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-4o-mini',
-                    messages,
-                    max_tokens: 10,
-                    temperature: 0
-                })
-            });
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error?.message || `API 오류 (${response.status})`);
-            }
-            data = await response.json();
-        } else {
-            // Production: call Netlify Function (API key is server-side)
-            const response = await fetch('/.netlify/functions/ai-search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages })
-            });
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error || `서버 오류 (${response.status})`);
-            }
-            data = await response.json();
-        }
-        const rawAnswer = data.choices[0].message.content.trim();
-        console.log('[AI Search] 원본 응답:', rawAnswer);
-
-        // Extract the first number from the response (handles "7", "7번", "[7]", "번호: 7" etc.)
-        const numberMatch = rawAnswer.match(/\d+/);
-        const matchedIndex = numberMatch ? parseInt(numberMatch[0], 10) : -1;
-        console.log('[AI Search] 파싱된 인덱스:', matchedIndex, '/ 섹션 수:', SECTION_MAP.length);
-
-        if (matchedIndex < 0 || matchedIndex >= SECTION_MAP.length) {
-            status.textContent = `적합한 프롬프트 패턴을 찾지 못했습니다. (응답: "${rawAnswer}")`;
-            status.className = 'search-error';
-            return;
-        }
-
-        const matchedSection = SECTION_MAP[matchedIndex];
-
-        // Find the first code example within the matched section
-        const sectionExamples = promptExamples.filter(ex => ex.sectionId === matchedSection.id);
-
-        let targetEl;
-        if (sectionExamples.length > 0) {
-            // Scroll to the first code example in the matched section
-            targetEl = sectionExamples[0].element;
-        } else {
-            // Fallback: scroll to the section itself
-            targetEl = document.getElementById(matchedSection.id);
-        }
-
-        if (!targetEl) {
-            status.textContent = '해당 섹션을 찾을 수 없습니다.';
-            status.className = 'search-error';
-            return;
-        }
-
-        // Remove previous highlights
-        document.querySelectorAll('.search-highlight-block').forEach(el => {
-            el.classList.remove('search-highlight-block');
-        });
-
-        // Highlight the target
-        targetEl.classList.add('search-highlight-block');
-        setTimeout(() => targetEl.classList.remove('search-highlight-block'), 4000);
-
-        // Scroll to the target
-        const offset = targetEl.getBoundingClientRect().top + window.scrollY - 100;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-
-        const exampleLabel = sectionExamples.length > 0 ? sectionExamples[0].label : '';
-        const exampleContent = sectionExamples.length > 0 ? sectionExamples[0].content : '';
-        const labelText = exampleLabel ? ` — "${exampleLabel}"` : '';
-        status.innerHTML = `<strong>"${matchedSection.title}"</strong> 패턴을 추천합니다.${labelText}`;
-        status.className = 'search-success';
-
-        // Save for generate
-        lastSearchResult = {
-            query,
-            section: matchedSection,
-            exampleContent
-        };
-
-    } catch (err) {
-        console.error('[AI Search] 오류:', err);
-        status.textContent = `오류: ${err.message}`;
-        status.className = 'search-error';
-    }
+    keyUnlock.classList.add('fade-out');
+    setTimeout(() => {
+        keyUnlock.style.display = 'none';
+        keysGrid.classList.add('revealed');
+    }, 380);
 }
 
 // ===== Generate Prompt =====
@@ -331,46 +339,49 @@ async function aiGenerate() {
     const query = input.value.trim();
 
     if (!query) {
-        status.textContent = '먼저 검색어를 입력해주세요.';
+        status.textContent = '업무 내용을 입력해주세요.';
         status.className = 'search-error';
         return;
     }
 
-    // If no search result yet, run search first then generate
-    if (!lastSearchResult || lastSearchResult.query !== query) {
-        await aiSearch();
-        if (!lastSearchResult || lastSearchResult.query !== query) return;
+    const hasLocalKey = typeof OPENAI_API_KEY !== 'undefined' && OPENAI_API_KEY !== 'your-api-key-here';
+    const isNetlify = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !window.location.protocol.startsWith('file');
+
+    if (!hasLocalKey && !isNetlify) {
+        status.textContent = 'API 키가 설정되지 않았습니다. js/config.js 파일에 OpenAI API 키를 입력하세요.';
+        status.className = 'search-error';
+        return;
     }
 
-    const hasLocalKey = typeof OPENAI_API_KEY !== 'undefined' && OPENAI_API_KEY !== 'your-api-key-here';
-
-    // Show popup with loading
+    // Show popup with loading inside result box
     openGeneratePopup();
-    const loading = document.getElementById('generate-loading');
     const result = document.getElementById('generate-result');
-    loading.style.display = 'block';
-    result.textContent = '';
+    result.textContent = '프롬프트를 생성하고 있습니다...';
+    result.classList.add('is-loading');
 
-    const generatePrompt = `당신은 프롬프트 엔지니어링 전문가입니다.
+    // Build full pattern knowledge as context
+    const allPatterns = SECTION_MAP
+        .map(sec => `• ${sec.title}\n  ${sec.description}`)
+        .join('\n\n');
 
-사용자가 처리하고 싶은 업무: "${query}"
+    const systemPrompt = `당신은 프롬프트 엔지니어링 전문가입니다.
 
-아래는 이 업무에 적합한 프롬프트 패턴 정보입니다:
-- 패턴명: ${lastSearchResult.section.title}
-- 패턴 설명: ${lastSearchResult.section.description}
-${lastSearchResult.exampleContent ? `- 참고 예시:\n${lastSearchResult.exampleContent}` : ''}
+아래는 다양한 프롬프트 패턴과 기법들입니다:
 
-위 패턴의 구조와 접근법을 활용하여, 사용자의 업무("${query}")에 맞는 실용적인 프롬프트를 생성해주세요.
+${allPatterns}
+
+사용자가 요청한 업무에 대해 위 패턴과 기법들을 자유롭게 조합하여, 해당 업무에 가장 효과적인 맞춤형 프롬프트를 생성해주세요.
 
 규칙:
-- 참고 예시의 구조/패턴만 활용하고, 내용은 사용자의 업무에 맞게 완전히 새로 작성
-- 바로 AI에 붙여넣기 할 수 있는 완성된 프롬프트만 출력
-- 설명이나 부가 텍스트 없이 프롬프트 본문만 반환
-- 한국어로 작성`;
+- 업무의 성격과 목표를 분석하여 가장 적합한 패턴 요소들을 자유롭게 결합하세요
+- 단순히 패턴 하나를 적용하지 말고, 업무에 진짜 필요한 구조로 통합하세요
+- 바로 AI에 붙여넣기 할 수 있는 완성된 프롬프트만 출력하세요
+- 설명이나 부가 텍스트 없이 프롬프트 본문만 반환하세요
+- 한국어로 작성하세요`;
 
     const messages = [
-        { role: 'system', content: generatePrompt },
-        { role: 'user', content: `"${query}" 업무를 위한 프롬프트를 생성해주세요.` }
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: `다음 업무를 위한 최적의 프롬프트를 생성해주세요: "${query}"` }
     ];
 
     try {
@@ -386,7 +397,7 @@ ${lastSearchResult.exampleContent ? `- 참고 예시:\n${lastSearchResult.exampl
                 body: JSON.stringify({
                     model: 'gpt-4o-mini',
                     messages,
-                    max_tokens: 1000,
+                    max_tokens: 1200,
                     temperature: 0.7
                 })
             });
@@ -399,7 +410,7 @@ ${lastSearchResult.exampleContent ? `- 참고 예시:\n${lastSearchResult.exampl
             const response = await fetch('/.netlify/functions/ai-search', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages, max_tokens: 1000 })
+                body: JSON.stringify({ messages, max_tokens: 1200 })
             });
             if (!response.ok) {
                 const err = await response.json();
@@ -408,12 +419,14 @@ ${lastSearchResult.exampleContent ? `- 참고 예시:\n${lastSearchResult.exampl
             data = await response.json();
         }
 
-        loading.style.display = 'none';
-        result.textContent = data.choices[0].message.content.trim();
+        const generated = data.choices[0].message.content.trim();
+        result.classList.remove('is-loading');
+        result.textContent = generated;
+        saveToHistory(query, generated);
 
     } catch (err) {
         console.error('[AI Generate] 오류:', err);
-        loading.style.display = 'none';
+        result.classList.remove('is-loading');
         result.textContent = `오류: ${err.message}`;
     }
 }
@@ -499,4 +512,97 @@ function showCopied(button) {
         button.innerHTML = originalHTML;
         button.classList.remove('copied');
     }, 2000);
+}
+
+// ===== Prompt History =====
+const HISTORY_KEY = 'promptHistory';
+const HISTORY_MAX = 10;
+
+function saveToHistory(query, result) {
+    const history = getHistory();
+    history.unshift({ query, result, date: new Date().toISOString() });
+    if (history.length > HISTORY_MAX) history.length = HISTORY_MAX;
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
+function getHistory() {
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+    catch { return []; }
+}
+
+function openHistoryPopup() {
+    renderHistory();
+    document.getElementById('history-overlay').classList.add('active');
+    document.getElementById('history-popup').classList.add('active');
+}
+
+function closeHistoryPopup() {
+    document.getElementById('history-overlay').classList.remove('active');
+    document.getElementById('history-popup').classList.remove('active');
+}
+
+function renderHistory() {
+    const history = getHistory();
+    const list = document.getElementById('history-list');
+    const countEl = document.getElementById('history-count');
+
+    countEl.textContent = history.length ? `(${history.length}/${HISTORY_MAX})` : '';
+
+    if (history.length === 0) {
+        list.innerHTML = '<p class="history-empty">아직 생성된 프롬프트가 없습니다.</p>';
+        return;
+    }
+
+    const copyIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>`;
+
+    list.innerHTML = history.map((item, i) => {
+        const d = new Date(item.date);
+        const dateStr = `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+        return `
+        <div class="history-item">
+            <div class="history-item-header">
+                <span class="history-query">${escHtml(item.query)}</span>
+                <span class="history-date">${dateStr}</span>
+            </div>
+            <pre class="history-result">${escHtml(item.result)}</pre>
+            <button class="history-copy-btn" onclick="copyHistoryItem(${i}, this)">
+                ${copyIcon} 복사
+            </button>
+        </div>`;
+    }).join('');
+}
+
+function escHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function copyHistoryItem(index, btn) {
+    const item = getHistory()[index];
+    if (!item) return;
+
+    const doFallback = () => {
+        const ta = document.createElement('textarea');
+        ta.value = item.result;
+        ta.style.cssText = 'position:fixed;left:-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+    };
+
+    const markCopied = () => {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> 복사`;
+            btn.classList.remove('copied');
+        }, 1800);
+    };
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(item.result).then(markCopied).catch(doFallback);
+    } else {
+        doFallback();
+        markCopied();
+    }
 }

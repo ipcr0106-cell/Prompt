@@ -18,7 +18,11 @@
             <p class="sidebar-subtitle">무역 실무 활용</p>
         </div>
         <ul class="chapter-list">
-            <li class="chapter-item active" data-chapter="1">
+            <li class="chapter-item active" data-chapter="intro">
+                <span class="chapter-number">Intro</span>
+                <span class="chapter-title">프롬프트 작성의 5가지 열쇠</span>
+            </li>
+            <li class="chapter-item" data-chapter="1">
                 <span class="chapter-number">1장</span>
                 <span class="chapter-title">무역 AI 프롬프트의 기초</span>
             </li>
@@ -28,9 +32,19 @@
             </li>
             <li class="chapter-item" data-chapter="3">
                 <span class="chapter-number">3장</span>
-                <span class="chapter-title">준비 중...</span>
+                <span class="chapter-title">프롬프트 프레임워크</span>
+            </li>
+            <li class="chapter-item" data-chapter="4">
+                <span class="chapter-number">4장</span>
+                <span class="chapter-title">프롬프트 마스터</span>
             </li>
         </ul>
+        <div class="sidebar-footer">
+            <button class="history-btn" onclick="openHistoryPopup()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                생성 기록
+            </button>
+        </div>
     </nav>
 
     <!-- Mobile sidebar toggle -->
@@ -45,11 +59,8 @@
         <div id="search-bar">
             <div class="search-container">
                 <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <input type="text" id="search-input" placeholder="어떤 업무를 처리하고 싶으세요? (예: 여행 일정, 비교 분석, 전문가 상담, 코드 리뷰...)" />
-                <button id="search-btn" onclick="aiSearch()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <button id="generate-btn" onclick="aiGenerate()" title="프롬프트 생성">
+                <textarea id="search-input" placeholder="어떤 업무를 처리하고 싶으세요? (예: 여행 일정, 비교 분석, 전문가 상담, 코드 리뷰...)" rows="1"></textarea>
+                <button id="generate-btn" onclick="aiGenerate()" title="프롬프트 생성 (Ctrl+Enter)">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
                     생성
                 </button>
@@ -75,6 +86,103 @@
                 </button>
             </div>
         </div>
+
+        <!-- History Popup -->
+        <div id="history-overlay" onclick="closeHistoryPopup()"></div>
+        <div id="history-popup">
+            <div class="popup-header">
+                <h3>프롬프트 생성 기록 <span id="history-count"></span></h3>
+                <button class="popup-close" onclick="closeHistoryPopup()">&times;</button>
+            </div>
+            <div class="popup-body" id="history-list"></div>
+        </div>
+
+        <!-- Intro -->
+        <article id="chapter-intro" class="intro-page">
+            <section id="sec-five-keys">
+                <div class="intro-headline">
+                    <p class="intro-tag">AI PROMPT GUIDE</p>
+                    <h1 class="intro-title">AI를 제대로 쓰는<br><span>5가지 핵심 열쇠</span></h1>
+                    <p class="intro-sub">막연한 질문엔 막연한 답이 돌아옵니다. 아래 5가지 원칙이 그 차이를 만듭니다.</p>
+                </div>
+
+                <div class="key-unlock" id="key-unlock" onclick="unlockKeys()">
+                    <div class="key-unlock-icon">
+                        <svg width="68" height="68" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="11" r="5" stroke="#FFD700" stroke-width="1.8" fill="rgba(255,215,0,0.12)"/>
+                            <circle cx="8" cy="11" r="2.2" fill="#FFD700" opacity="0.5"/>
+                            <path d="M13 11h8" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M18 11v2.5" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M21 11v2" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <p class="key-unlock-hint">클릭하여 열어보세요</p>
+                </div>
+
+                <div class="keys-grid" id="keys-grid">
+                    <div class="key-card">
+                        <div class="key-num">01</div>
+                        <div class="key-body">
+                            <p class="key-en">POINT OF VIEW</p>
+                            <h3 class="key-title">구체적으로 명시하기</h3>
+                            <p class="key-desc">범위·수치·대상을 정확히 써야 정확한 답이 나옵니다.</p>
+                            <div class="key-example">
+                                <span class="key-bad">❌ 마케팅 알려줘</span>
+                                <span class="key-good">✅ 예산 50만원, 40대 타겟, 아이디어 3개</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="key-card">
+                        <div class="key-num">02</div>
+                        <div class="key-body">
+                            <p class="key-en">CONTEXT</p>
+                            <h3 class="key-title">배경 정보 제공</h3>
+                            <p class="key-desc">상황·목적·대상을 먼저 설명할수록 답변의 질이 높아집니다.</p>
+                            <div class="key-example">
+                                <span class="key-bad">❌ 은퇴 준비 글 써줘</span>
+                                <span class="key-good">✅ 50대 직장인 대상, 따뜻한 조언 톤으로</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="key-card">
+                        <div class="key-num">03</div>
+                        <div class="key-body">
+                            <p class="key-en">SAMPLE</p>
+                            <h3 class="key-title">예시 하나면 충분</h3>
+                            <p class="key-desc">원하는 형식·톤의 샘플을 보여주는 것이 설명보다 빠릅니다.</p>
+                            <div class="key-example">
+                                <span class="key-bad">❌ 감동적인 이메일 써줘</span>
+                                <span class="key-good">✅ 이 예시와 같은 톤으로 작성해줘</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="key-card">
+                        <div class="key-num">04</div>
+                        <div class="key-body">
+                            <p class="key-en">STEP BY STEP</p>
+                            <h3 class="key-title">업무는 잘게 쪼개기</h3>
+                            <p class="key-desc">큰 과제는 단계별로 나눠 질문해야 결과가 정교해집니다.</p>
+                            <div class="key-example">
+                                <span class="key-bad">❌ 사업계획서 한번에 짜줘</span>
+                                <span class="key-good">✅ 목차만 먼저 → 그다음 세부 내용 작성</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="key-card">
+                        <div class="key-num">05</div>
+                        <div class="key-body">
+                            <p class="key-en">PARTNER</p>
+                            <h3 class="key-title">AI와 대화로 발전</h3>
+                            <p class="key-desc">초안 요청 후 피드백을 주고받으며 완성도를 높여가세요.</p>
+                            <div class="key-example">
+                                <span class="key-good">✅ 이 부분 더 전문가답게 고쳐줘</span>
+                                <span class="key-good">✅ 실제 사례 하나 더 추가해줘</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
 
         <!-- Chapter 1 -->
         <article class="chapter" id="chapter-1">
@@ -324,6 +432,19 @@ FTA 협정 세율과 원산지 규정의 전문가로
 당신은 까다로운 개발자입니다.
 코드 리뷰 시 성능, 보안, 가독성을 엄격히 평가하며
 칭찬보다 개선점을 먼저 지적하는 스타일입니다</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>상담사 페르소나</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                복사
+                            </button>
+                        </div>
+                        <pre><code>[상담사 페르소나]
+당신은 날카로운 분석을 하는 상담사입니다
+심리적 통찰을 바탕으로 문제의 근본 원인을 파악하며
+판단 없이 공감하되 명확한 방향을 제시합니다</code></pre>
                     </div>
                     <div class="code-block">
                         <div class="code-header">
@@ -1133,26 +1254,702 @@ STEP N. {행동}
                     <h2>게임 플레이 패턴: 지금부터 게임을 시작하지!</h2>
                 </div>
                 <div class="card">
-                    <div class="card-header">
-                        <h3>콘텐츠 준비 중</h3>
-                    </div>
-                    <p class="card-desc">게임 플레이 패턴의 내용이 곧 추가될 예정입니다.</p>
+                    <div class="card-header"><h3>외계인 침공 게임</h3></div>
+                    <div class="code-block"><div class="code-header"><span>텍스트 어드벤처 게임 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>#입력
+[게임 목적]
+- 외계인의 침략 계획을 밝혀내고 저지함으로 지구를 구하는 게임
+
+[플레이어가 해야 할 일]
+- 지구의 여러 도시와 외계인 기지를 탐험한다
+- 다양한 NPC들과 상호작용하고 정보를 수집한다
+- 논리적 사고를 통해 퍼즐을 해결한다
+- 임무 수행에 도움이 될 유용한 아이템을 수집한다
+- 외계인 전투에 참여해 적들을 물리친다
+
+[플레이어의 특징]
+- 영웅적이고 용감하고, 항상 지구를 구하기 위해 최선을 다한다
+
+[도전과 장애물]
+- 도시의 위험한 외계 생명체와 마주쳐 싸운다
+- 외계인 기지에 설치된 위험한 함정을 해쳐나간다
+- 외계인 보스와 대결해야 한다
+
+[게임 진행 조건]
+- 적에게 공격당하면 전투에 참여한다
+- 수집한 아이템을 사용하여 장애물을 극복한다
+- NPC와 상호작용할 때 대화 옵션을 선택한다
+- 게임 도중 내리는 선택이 게임 이야기와 진행에 영향을 미친다
+- 상태창을 통해 게임 진행 상태가 표시된다
+- 반드시 한 장면씩 진행한다
+
+[게임 엔딩]
+- 외계인 본거지에 도달하고 최후의 전투에 참여한다
+
+#처리
+당신은 "텍스트 기반 어드벤처 게임"입니다
+당신의 목표는 외계인의 침략을 저지하고 지구를 안전하게 지키는
+게임을 대화 형식으로 제공하는 것입니다.
+상단의 입력 내용을 게임 전체에 반영해 전체 구조를 설계합니다.
+설계 내용을 설명할 필요는 없습니다.
+대화 형식으로 지금부터 게임을 시작합니다.
+
+#출력
+[상태창]
+[장면 설명]
+[선택지]</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>유니콘 나라 스토리텔링 게임 (함수 형태)</h3></div>
+                    <div class="code-block"><div class="code-header"><span>어린이 스토리텔링 게임 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>#입력
+[주인공]=서아
+[나이와 성별]=4살 여아
+[스토리]=달려견 밀크와 산책하던 주인공이 아기 유니콘을 만나
+유니콘 나라를 여행하고 집으로 돌아옵니다
+
+#처리
+당신은 "스토리텔링 게임"입니다.
+당신의 목표는 [주인공]이 등장하는 [스토리]를 가진 게임을 제공하는 것입니다.
+이 게임은 [나이와 성별]을 대상으로 하며,
+반드시 어떠한 폭력성도 없으며, 안전하고 행복한 결말을 맞이해야 합니다.
+전체 게임은 5분 이내에 완료됩니다.
+각 장면에는 선택지가 제공되고, 플레이어가 선택할 때까지 대기합니다.
+반드시 한 장면씩 진행합니다.
+이러한 규칙을 기반으로 당신의 상상력을 발휘하여 게임의 전체 구조를 설계합니다.
+설계내용을 설명할 필요는 없습니다.
+대화 형식으로 지금부터 게임을 시작합니다.</code></pre></div>
                 </div>
             </section>
+
+            <!-- Section: 질문 개선 패턴 -->
+            <section id="sec-question-improve">
+                <div class="section-title"><h2>질문 개선 패턴: 질문을 질문하기</h2></div>
+                <div class="card">
+                    <p class="card-desc">AI에게 사용자의 질문 자체를 먼저 분석하고 더 나은 질문으로 업그레이드하게 하는 패턴</p>
+                    <div class="info-box">
+                        <p><strong>질문 보내기 전 체크리스트</strong></p>
+                        <ul>
+                            <li>대상이 명확한가?</li>
+                            <li>범위가 좁혀졌는가?</li>
+                            <li>목적이 포함되어 있나?</li>
+                            <li>현재 상태가 포함되어 있는가?</li>
+                            <li>잘못된 전제는 없는가?</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 1: 개선 후 답변</h3></div>
+                    <div class="code-block"><div class="code-header"><span>개선 후 답변 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>제 질문에 바로 답하지 말고,
+먼저 제 질문을 분석해서 더 나은 질문으로 개선해주세요.
+개선된 질문 보여준 뒤, 그 질문에 스스로 답하세요.</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 2: 여러 버전 제시</h3></div>
+                    <div class="code-block"><div class="code-header"><span>다방향 분기형 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>제 질문에 3가지 다른 방향으로 개선해 주세요.
+각 버전이 어떤 목적에 맞는지 설명하고
+제가 선택하면 그 버전으로 답하세요</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 3: 문제 진단 먼저</h3></div>
+                    <div class="code-block"><div class="code-header"><span>전제 교정형 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>제 질문의 문제점(모호함, 잘못된 전제, 누락된 맥락)을 먼저 지적하고
+수정된 질문으로 답변하세요</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>통합 예시</h3></div>
+                    <div class="code-block"><div class="code-header"><span>단순 개선형</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 질문을 더 명확하고 답변 가능한 형태로 개선한 뒤
+개선된 질문으로 답변하세요
+개선한 이유도 한 줄로 설명하세요
+
+질문: "AI를 무역에 활용하려면 어떻게 해야 하나요?"</code></pre></div>
+                    <div class="code-block"><div class="code-header"><span>전제 교정형</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>제 질문에 잘못된 전제나 오해가 있으면
+먼저 그것을 지적하고 교정된 질문으로 다시 물어봐 주세요
+그 다음 교정된 질문에 답하세요
+
+질문: "FTA를 쓰면 관세를 안 내도 되는 건가요?"</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: 팩트체크 목록 패턴 -->
+            <section id="sec-factcheck">
+                <div class="section-title"><h2>팩트체크 목록 패턴: 정보 검증을 위한 목록 작성하기</h2></div>
+                <div class="card">
+                    <p class="card-desc">검증이 필요한 항목을 스스로 추출하고 목록화하도록 지시하는 패턴</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 1: 답변 후 목록 추가</h3></div>
+                    <div class="code-block"><div class="code-header"><span>팩트체크 목록형 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래의 질문에 답변하세요
+답변 끝에 반드시 팩트체크 목록을 작성하세요
+
+팩트체크 목록 형식:
+- 🔴 반드시 확인: 틀리면 큰 피해가 생기는 항목
+- 🟡 확인 권장: 바뀔 가능성이 있는 항목
+- 🟢 참고 수준: 대략적으로 맞지만 세부는 다를 수 있는 항목
+
+질문: "한미 FTA 적용 시 원산지 증명서 발급 절차는?"</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 2: 신뢰도 점수형</h3></div>
+                    <div class="code-block"><div class="code-header"><span>신뢰도 점수형 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 내용에 대한 답변을 하되
+각 주요 사실에 신뢰도 점수(0~100%)와
+그 점수를 준 이유를 함께 표시하세요
+
+형식: {사실내용} [신뢰도: xx%](이유:~)
+
+질문: "베트남 수출 시 주요 인증 요건과 관세율은?"</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: 메타언어 생성 패턴 -->
+            <section id="sec-metalang">
+                <div class="section-title"><h2>메타언어 생성 패턴: AI와 대화하는 나만의 비밀 코드</h2></div>
+                <div class="card">
+                    <p class="card-desc">약어(단축어)를 정의하여 반복 작업을 간단한 명령어로 실행하는 패턴. /약축어 이름 = 상세 지시</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>무역 업무 단축어</h3></div>
+                    <div class="code-block"><div class="code-header"><span>단축어 정의 + 사용 예시</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>이 대화에서 아래의 명령어를 사용합니다.
+각 명령어의 정의를 정확하게 기억하고 실행하세요
+
+[약축어]
+/요약=핵심만 3줄, 전문용어 제거, 무역 실무자 기준, 결론 먼저→이유 순서로 작성
+/코드=python작성, 주석 한국어, 예외처리 포함, 실행가능한 완성 코드, 설명없이 코드만 출력
+/비교=2~4개 대안을 표로 정리, 항목: 장점,단점,비용,난이도,추천상황, 마지막 행에 종합추천 추가
+
+사용자: /요약 베트남 FTA 활용 방법 알려줘</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>편집자 단축어 (함수 형태)</h3></div>
+                    <div class="code-block"><div class="code-header"><span>유의어/반의어 단축어 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>#입력
+[독자]=초등학생
+[단축어1]="/유:[단어]:[개수]"라고 요청하면,
+[단어]에 대한 [독자]가 이해할 수 있는 유의어 [개수]를 제공하고,
+가장 추천하는 유의어를 알려주세요
+[단축어2]="/반:[단어]:[개수]"라고 요청하면,
+[단어]에 대한 [독자]가 이해할 수 있는 반의어 [개수]를 제공하고,
+가장 추천하는 반의어를 알려주세요
+
+#처리
+당신은 "출판사 편집자"입니다
+[독자] 대상의 교양 도서를 교정하고 있습니다
+내가 단축어를 제공하면 그에 따라 작업을 수행해주세요.
+내가 단축어를 제공할 때까지 대기합니다
+
+#질문
+/유:금일:4</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: 리플렉션 패턴 -->
+            <section id="sec-reflection">
+                <div class="section-title"><h2>리플렉션 패턴: AI를 위한 자기성찰의 거울</h2></div>
+                <div class="card">
+                    <p class="card-desc">AI 초안 → AI 스스로 비평 → AI 스스로 개선 → 최종 결과물</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 1: 생성 → 비평 → 개선</h3></div>
+                    <div class="code-block"><div class="code-header"><span>3단계 자기성찰 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래의 요청을 처리하되 반드시 3단계로 진행하세요
+
+[초안]
+먼저 최선을 다해 답변을 작성하세요
+
+[자기비평]
+방금 작성한 답변을 검토하고 아래를 솔직하게 답변하세요
+- 가장 약한 부분은 어디인가요?
+- 빠뜨린 중요한 내용이 있나요?
+- 독자가 오해할 수 있는 부분이 있는가?
+
+[개선본]
+비평을 반영한 최종 답변을 작성하세요
+
+요청: "python으로 엑셀 파일을 읽어 HS Code 별로 정렬하는 코드 작성"</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 2: 품질 기준 평가 + 개선</h3></div>
+                    <div class="code-block"><div class="code-header"><span>5가지 기준 평가 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 문서를 작성하고 완성 후 5가지 기준으로 각각 10점 만점 평가를 수행하세요
+점수가 7점 미만인 항목은 반드시 개선하세요
+
+평가 기준:
+① 명확성: 한번에 이해되는가?
+② 완결성: 필요한 내용이 모두 있는가?
+③ 정확성: 틀린 내용이 없는가?
+④ 실용성: 읽은 후 바로 실행할 수 있는가?
+⑤ 간결성: 불필요한 내용이 없는가?
+
+요청: "첫 수출을 준비하는 소기업을 위한 체크리스트 작성"</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: 아웃라인 확장 패턴 -->
+            <section id="sec-outline">
+                <div class="section-title"><h2>아웃라인 확장 패턴: 복잡한 주제와 아이디어의 구조화</h2></div>
+                <div class="card">
+                    <p class="card-desc">큰 주제의 뼈대를 잡아서 살을 붙여나가는 방식. 1단계→2단계→3단계 순서로 점진적으로 확장.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>단계적 확장 레시피</h3></div>
+                    <div class="code-block"><div class="code-header"><span>3단계 아웃라인 확장 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>#1단계 요청: 대주제 아웃라인만
+아래 주제의 최상위 구조만 작성하세요
+각 항목의 제목과 한 줄 설명만 포함하세요
+세부 내용은 아직 작성하지 마세요
+
+주제: "무역 실무자를 위한 python 자동화 8주 과정"
+
+#2단계 요청: 선택한 파트 확장
+5주차 상세 아웃라인을 확장하세요
+각 수업의 학습 목표, 실습 내용, 예상 소요 시간을 포함하세요
+
+#3단계 요청: 최소 단위까지 확장
+3차시 수업의 강의 스크립트와 실습 코드를 완성본으로 작성하세요</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>비중 및 우선순위 포함 아웃라인</h3></div>
+                    <div class="code-block"><div class="code-header"><span>비중 포함 아웃라인 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 교육과정의 아웃라인을 작성하되
+각 파트에 전체 대비 비중(%)과 우선순위를 함께 표시하세요
+
+조건:
+- 실습 코드가 이론 설명보다 비중이 높아야 한다
+- 수강생 수준: python 기초 수료자
+- 총 교육 시간: 40시간
+
+주제: 무역데이터 자동화 심화 과정</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: 컨텍스트 관리자 패턴 -->
+            <section id="sec-context-manager">
+                <div class="section-title"><h2>컨텍스트 관리자 패턴: AI 응답의 방향 조정하기</h2></div>
+                <div class="card">
+                    <p class="card-desc">이용자의 상황에 맞추어 답변을 유도. 대화 전체에 적용되는 컨텍스트 블럭을 선언하여 일관된 답변 유도.</p>
+                    <div class="info-box">
+                        <p><strong>컨텍스트 선언 블럭 구성요소</strong></p>
+                        <ul>
+                            <li><strong>상황:</strong> 지금 처한 구체적 상황</li>
+                            <li><strong>나의 수준:</strong> 이 주제에 대한 사전 지식과 경험</li>
+                            <li><strong>목적:</strong> 이 답변으로 무엇을 결정하거나 실행할 것인가</li>
+                            <li><strong>제약:</strong> 시간, 예산, 인력, 기술적 한계</li>
+                            <li><strong>원하지 않는 것:</strong> 답변에서 제외해야 할 방향이나 내용</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>이메일 분석 + 개선</h3></div>
+                    <div class="code-block"><div class="code-header"><span>마케팅 전문가 컨텍스트 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>#입력
+[이메일]='''
+제목: [제품명] 출시, 당신의 일상을 변화시킬 혁신적인 기술을 만나보세요!
+안녕하세요, [고객명]님
+여러분의 일상에 혁신을 가져올 새로운 기술, [제품명]이 드디어 출시되었습니다!
+주요 특징:
+- 초고속 처리 기능으로 시간 절약 가능
+- 사용자 친화적 인터페이스로 누구나 쉽게 사용
+- 지속 가능한 소재 사용으로 환경까지 생각한 디자인
+'''
+
+#처리
+당신은 "마케팅 전문가"입니다.
+고객이 가장 관심을 가질 만한 기능과 혜택, 감정적 요소를 중심으로 분석하세요.
+이메일의 길이나 문법적 정확성은 무시하세요.
+
+#출력
+[분석 결과]
+[개선된 이메일]</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>대화 전체 컨텍스트 선언</h3></div>
+                    <div class="code-block"><div class="code-header"><span>컨텍스트 블럭 선언 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 조건은 이 대화 전체에 적용됩니다
+모든 답변은 이 컨텍스트 안에서만 이루어지세요
+
+##회사 상황
+- 업종: 의료기기 중소기업 (직원 30명, 무역팀 3명)
+- 주요 수출국: 미국(60%), 독일(30%), 기타(10%)
+- 연수출액: 약 50억원
+
+##기술 환경
+- 현재 시스템: ERP 없음, 엑셀 중심
+- 개발 인력 없음 / IT예산: 월 100만원 이내
+
+##절대 제외 사항
+- 대규모 시스템 도입 제안(ERP)
+- 개발자 고용 전제의 솔루션
+- 6개월 이상 구축 기간이 필요한 방안
+
+이 컨텍스트를 이해했으면 "준비완료"라고만 답하세요
+
+질문: 수출 자동화 방법 알려줘</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: 무한 생성 패턴 -->
+            <section id="sec-infinite-gen">
+                <div class="section-title"><h2>무한 생성 패턴: 무한한 맞춤형 출력 생성하기</h2></div>
+                <div class="card">
+                    <p class="card-desc">고정 프레임과 변수를 정의하여 다양한 조합의 결과물을 반복 생성하는 패턴</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>무역 이메일 생성기</h3></div>
+                    <div class="code-block"><div class="code-header"><span>변수 기반 이메일 생성 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>무역 이메일 생성기
+
+고정 프레임:
+"[수신자]에게 [목적]을 전달하는 영문 이메일"
+
+변수:
+{수신자}: 신규 바이어/기존 거래처/포워더/관세사
+{목적}: 첫 연락/견적요청/납기연장/클레임 대응
+{톤}: 공식/친근/긴급
+
+생성 규칙:
+3단락 구조, 제목 포함, 150단어 이내</code></pre></div>
+                </div>
+            </section>
+
         </article>
 
         <!-- Chapter 3 -->
         <article class="chapter" id="chapter-3">
             <div class="chapter-hero">
                 <h1>3장</h1>
-                <p>준비 중</p>
+                <p>프롬프트 프레임워크</p>
             </div>
-            <section>
+
+            <!-- Section: 5W1H -->
+            <section id="sec-5w1h">
+                <div class="section-title"><h2>프롬프트 작성은 결국 글쓰기 — 5W1H 프레임워크</h2></div>
                 <div class="card">
-                    <div class="card-header">
-                        <h3>콘텐츠 준비 중</h3>
+                    <div class="code-block"><div class="code-header"><span>5W1H 프레임워크 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>#입력
+[WHO]=중소 제조업체(직원 30명)
+[WHAT]=친환경 포장재를 유럽 시장에 수출
+[WHEN]=2026년 하반기부터 본격 수출 시작
+[WHERE]=독일, 프랑스, 네덜란드를 1차 타겟
+[WHY]=EU의 플라스틱 규제 강화로 친환경 포장재 수요 급증
+[HOW]=현재 유통사 파트너십을 통한 B2B 판매
+
+#처리
+당신은 "EU 시장 진출 전문 컨설턴트"입니다
+상단의 5W1H 정보를 바탕으로 다음을 작성하세요
+1. 시장 진입 전략(3가지 옵션 비교)
+2. 필수 인증 및 규제 대응(CE마크 등)
+3. 바이어 발굴 및 파트너십 전략
+4. 6개월 실행 로드맵
+
+#출력
+[전략보고서]=각 섹션별 300-500 단어</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: CO-STAR -->
+            <section id="sec-costar">
+                <div class="section-title"><h2>CO-STAR 프레임워크 — 프롬프트 엔지니어링 대회 1등 전략</h2></div>
+                <div class="card">
+                    <p class="card-desc"><strong>C</strong>ontext · <strong>O</strong>bjective · <strong>S</strong>tyle · <strong>T</strong>one · <strong>A</strong>udience · <strong>R</strong>esponse</p>
+                    <div class="code-block"><div class="code-header"><span>CO-STAR 프레임워크 예시</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>Context: 미국 대형 유통사가 K-뷰티 제품 소싱을 고려 중입니다.
+현재 중국 공급사와 거래 중이나, 품질 이슈로 대안을 찾고 있습니다.
+
+Objective: 우리 회사를 신규 공급사로 선정하도록 설득하는 제안서를 작성하세요.
+
+Style: 전문적이고 데이터 기반의 비즈니스 문서 스타일
+
+Tone: 자신감 있으면서도 파트너십을 강조하는 협력적인 톤
+
+Audience: 미국 유통사의 소싱 디렉터
+
+Response:
+- 영문 Business Proposal 형식
+- 총 800-1000단어
+- Executive Summary, Company Profile, Product Advantages,
+  Quality Assurance, Pricing &amp; Terms, Next Steps 포함
+- 품질 비교 데이터 및 인증서 리스트 포함</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: FOCUS -->
+            <section id="sec-focus">
+                <div class="section-title"><h2>FOCUS 프레임워크 — 바이어 발굴 캠페인</h2></div>
+                <div class="card">
+                    <p class="card-desc"><strong>F</strong>unction · <strong>O</strong>bjective · <strong>C</strong>ontext · <strong>U</strong>tility · <strong>S</strong>pecifications</p>
+                    <div class="code-block"><div class="code-header"><span>FOCUS 프레임워크 예시</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>Function: 당신은 글로벌 B2B 마케팅 전문가입니다.
+신규 바이어 발굴을 위한 LinkedIn 메시지를 작성하세요.
+
+Objective: 타겟 바이어의 답장률 30% 이상으로 높이는 것이 목적
+
+Context: 우리 회사는 산업용 센서를 제조하며,
+독일 자동차 부품 업체를 타겟으로 합니다.
+가격 경쟁력과 빠른 납기가 강점입니다.
+
+Utility: LinkedIn 이메일 캠페인에 활용됩니다
+
+Specifications:
+- 메시지 길이: 150-200단어
+- 영문 작성
+- 3가지 버전(공식적/친근함/문제 해결 중심)
+- 각 버전마다 제목 포함</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: ROSES -->
+            <section id="sec-roses">
+                <div class="section-title"><h2>ROSES 프레임워크 — 계약 협상 전략</h2></div>
+                <div class="card">
+                    <p class="card-desc"><strong>R</strong>ole · <strong>O</strong>bjective · <strong>S</strong>cenario · <strong>E</strong>xpected Solution · <strong>S</strong>teps</p>
+                    <div class="code-block"><div class="code-header"><span>ROSES 프레임워크 예시</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>Role: 당신은 국제 무역 협상 전문가입니다
+
+Objective: 미국 바이어와의 가격 협상의 우리 목표인 FOB $50/unit 달성
+
+Scenario:
+- 바이어 첫 제시가: $40/unit
+- 우리 희망가: $50/unit
+- 시장 평균가: $45/unit
+- 바이어 연간 예상 물량: 50,000units
+- 경쟁사 중국 업체 제시가: $45/unit
+
+Expected Solution:
+- 협상 전략 3단계
+- 각 단계별 제시 가격 및 조건
+- 양보 vs 가치 강조 밸런스
+- 최종 합의 시나리오
+
+Steps:
+1. 현재 상황 분석
+2. 가치 제안 준비(품질, 납기, 인증)
+3. 1차 협상: 품질 차별화 강조, $55 제시
+4. 2차 협상: 물량 증가 시 단계별 할인 제안($55→$53→$50)
+5. 계약서 작성 및 후속 조치
+
+#출력
+[협상 스크립트]=각 단계별 대화 예시(영문)
+[체크리스트]=협상 전 준비 사항</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: RISEN -->
+            <section id="sec-risen">
+                <div class="section-title"><h2>RISEN 프레임워크 — 무역 분쟁 해결</h2></div>
+                <div class="card">
+                    <p class="card-desc"><strong>R</strong>ole · <strong>I</strong>nstructions · <strong>S</strong>teps · <strong>E</strong>xpectations · <strong>N</strong>arrowing</p>
+                    <div class="code-block"><div class="code-header"><span>RISEN 프레임워크 예시</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>Role: 국제 무역 분쟁 조정관 및 무역팀장
+
+Instructions: 독일 바이어와의 물류 지연(2주) 문제를 해결하고
+계약 파기 리스크를 방지하라.
+
+Steps:
+1. 상황 고지: 지연 사유(해상 물류 정체)를 데이터와 함께 즉시 통보
+2. 피해 산정: 바이어의 현지 판매 일정에 미치는 영향 파악
+3. 해결책 제시: 긴급 물량 일부를 항공(Air)으로 전환 제안
+4. 상호 합의: 지연된 물량에 대한 차기 주문 시 할인 또는 보험료 지원
+
+Expectations: 바이어의 신뢰 유지 및 차기 거래(Repeat Order) 확보
+
+Narrowing: 지연 배상금(L/D) 청구 대신,
+'일부 물량 항공 운송비 분담'으로 합의를 유도하여 실질적 금전 손실 최소화</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: BAB -->
+            <section id="sec-bab">
+                <div class="section-title"><h2>BAB 프레임워크 — 수출 성공 스토리</h2></div>
+                <div class="card">
+                    <p class="card-desc"><strong>B</strong>efore · <strong>A</strong>fter · <strong>B</strong>ridge — 변화 전·후와 그 다리를 설명하는 스토리텔링 구조</p>
+                    <div class="code-block"><div class="code-header"><span>BAB 프레임워크 예시</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>Before: 매년 수출액이 20억원에 머물러 있었으며,
+모든 수출 서류를 수기 엑셀로 관리하느라
+바이어의 급격한 물량 증가 요청에 대응하지 못했습니다.
+
+After: 연 수출 50억원을 돌파하고 미국 시장 점유율 60%를 달성했습니다.
+이제는 바이어가 묻기 전에 먼저 선적 현황과
+품질 분석 리포트를 제공하며 신뢰받는 파트너가 되었습니다.
+
+Bridge: '데이터 기반 품질 관리'와 '파이썬 업무 자동화'를 도입했습니다.
+엑셀 수기 입력을 자동화하여 확보한 시간으로 FDA 품질 기준 데이터를 체계화했고,
+이를 바이어 제안서에 시각화하여 신뢰도를 200% 이상 끌어올렸습니다.</code></pre></div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Chapter 4 -->
+        <article class="chapter" id="chapter-4">
+            <div class="chapter-hero">
+                <h1>4장</h1>
+                <p>AI와의 대화를 지배하는 프롬프트 마스터</p>
+            </div>
+
+            <!-- Section: 다중 관점 기법 -->
+            <section id="sec-multi-perspective">
+                <div class="section-title"><h2>다중 관점 기법: 여러 관점으로 보기</h2></div>
+                <div class="card">
+                    <div class="info-box">
+                        <p><strong>다중 관점이 만드는 것</strong></p>
+                        <ul>
+                            <li>서로 다른 관점이 <strong>충돌</strong>하는 지점 → 진짜 문제 발견</li>
+                            <li>서로 다른 관점이 <strong>동의</strong>하는 지점 → 확실한 진실</li>
+                            <li>서로 다른 관점이 <strong>보완</strong>하는 지점 → 완전한 해결책</li>
+                        </ul>
                     </div>
-                    <p class="card-desc">3장의 내용이 곧 추가될 예정입니다.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 1: 이해관계자 병렬 분석</h3></div>
+                    <div class="code-block"><div class="code-header"><span>이해관계자 관점 분석 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 상황을 관련된 4명의 이해관계자 입장에서 동시에 분석하세요
+
+각 이해관계자에 대해:
+- 가장 원하는 것(핵심 욕구)
+- 가장 두려워하는 것(핵심 공포)
+- 공개적으로 말하는 것 vs 속으로 생각하는 것
+- 이 상황에 갖는 협상력
+
+마지막에:
+- 모두가 동의할 수 있는 최소 공통점
+- 가장 큰 갈등 지점
+- 현실적 합의 가능 경로
+
+상황: 중소기업이 수출 자동화 시스템 도입을 추진 중인 상황
+이해관계자: 대표, 무역팀장, 팀원 2명, IT 외주업체</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 2: 전문 분야 렌즈 분석</h3></div>
+                    <div class="code-block"><div class="code-header"><span>5가지 분야 렌즈 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 문제를 5가지 전문 분야의 렌즈로 동시에 분석하세요
+각 분야가 이 문제를 어떻게 정의하고 어떤 해결책을 제안하는지 보여주세요
+
+분야: 심리학 / 경제학 / 시스템 공학 / 인류학 / 게임 디자인
+
+문제: 무역팀이 새로운 자동화 도구 도입 후 3개월이 지나도 제대로 활용하지 못한다</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>방법 3: 시간 레이어 분석</h3></div>
+                    <div class="code-block"><div class="code-header"><span>3개 시간 레이어 분석 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>아래 주제를 3개의 시간 레이어에서 동시 분석하세요
+각 레이어가 다음 레이어에 어떤 영향을 주는지 연결하세요
+
+레이어1 - 과거(5년 전):
+당시 사람들은 무엇을 알고, 무엇을 몰랐나?
+
+레이어2 - 현재:
+과거의 결정이 현재에 어떤 모습으로 나타나는가?
+지금 진짜 문제는 무엇인가?
+
+레이어3 - 미래(5년 후):
+지금 선택이 미래에 어떤 모습으로 누적되는가?
+어떤 결정을 지금 내려야 미래가 달라지는가?
+
+주제: 한국 중소기업의 무역 디지털 격차</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: CoT -->
+            <section id="sec-cot">
+                <div class="section-title"><h2>CoT 기법: 복잡한 문제를 단계적으로 추론하기</h2></div>
+                <div class="card">
+                    <p class="card-desc">Chain of Thought — AI가 중간 사고 과정을 단계별로 보여주며 추론하도록 유도. 즉각 답변보다 정확도와 신뢰도가 높음.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>심사숙고 유도 메커니즘</h3></div>
+                    <div class="info-box">
+                        <ul>
+                            <li><strong>메커니즘1 — 출력 전 사고 공간 확보:</strong> 답을 쓰기 전에 먼저 생각하라</li>
+                            <li><strong>메커니즘2 — 사고 단계 강제:</strong> 건너뛸 수 없는 중간 단계 설계</li>
+                            <li><strong>메커니즘3 — 자기 검증 루프:</strong> 답을 낸 후 스스로 검토하게 하기</li>
+                            <li><strong>메커니즘4 — 불확실성 명시 요구:</strong> 모르는 것과 아는 것을 구분하게 함</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>CoT 적용 예시</h3></div>
+                    <div class="code-block"><div class="code-header"><span>단계적 추론 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>우리 회사가 베트남에 진출해야 할지
+단계별로 생각하면서 판단해줘
+각 단계에서 내린 중간 결론을 보여줘</code></pre></div>
+                </div>
+            </section>
+
+            <!-- Section: APE -->
+            <section id="sec-ape">
+                <div class="section-title"><h2>APE — 자동 프롬프트 생성 및 최적화</h2></div>
+                <div class="card">
+                    <p class="card-desc">Automatic Prompt Engineer — AI가 스스로 프롬프트 후보를 생성하고 평가하여 최적의 프롬프트를 만들어내는 기법</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>수동 APE 마스터 프롬프트</h3></div>
+                    <div class="code-block"><div class="code-header"><span>APE 마스터 프롬프트</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>역할: 당신은 프롬프트 엔지니어링 전문가입니다
+주어진 작업에 대해 최적의 프롬프트를 자동으로 생성·평가·개선합니다
+
+APE 실행 순서
+
+STEP1: 후보 프롬프트 생성
+아래 작업을 위한 프롬프트 후보 10개를 생성합니다
+각 후보는 서로 다른 전략을 사용해야 합니다
+
+[전략 유형]
+- 역할 부여형: "당신은 xxx 전문가입니다"
+- 단계별 지시형: "step1: … step2: …"
+- 예시 포함형: 퓨샷 방식으로 패턴 제시
+- 제약 명시형: "반드시 ~하되, ~하지 마세요"
+- 목적 중심형: "최종목표는 ~이며 …"
+- 독자 설정형: "~을 모르는 사람도 이해하도록"
+- 형식 지정형: "결과를 [형식]으로 출력하세요"
+- 품질 기준형: "~한 기준으로 평가했을 때 90점 이상…"
+- 역방향형: "나쁜 예시는 ~이고, 좋은 예시는 ~"
+- 메타 지시형: "이 작업의 본질은 ~이며…"
+
+STEP2: 후보 자체 평가 (각 100점 만점)
+- 명확성(25점): 지시가 모호하지 않은가
+- 완전성(25점): 필요한 정보가 다 있는가
+- 실행가능성(25점): AI가 바로 실행하는가
+- 품질유도력(25점): 높은 품질의 결과를 이끌어 내는가
+
+STEP3: 상위 3개 선택 후 교차 최적화
+상위 3개 프롬프트의 장점을 결합하여 최종 최적 프롬프트 1개 생성
+
+STEP4: 최적 프롬프트 출력
+- 최적 프롬프트 전문
+- 왜 이것이 최선인지 설명
+- 사용 시 주의사항
+
+작업입력:
+작업: {고객 클레임 이메일 답장 작성}
+원하는 결과물: {고객이 화가 풀리고 우리 회사를 신뢰하게 하는 답장}
+피해야 할 것: {방어적 태도, 책임 회피, 공허한 사과}</code></pre></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>코딩 프롬프트 APE 예시 비교</h3></div>
+                    <div class="code-block"><div class="code-header"><span>품질 단계별 프롬프트 비교</span><button class="copy-btn" onclick="copyCode(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>복사</button></div>
+                    <pre><code>1단계 (낮음): 파이썬으로 엑셀 파일 읽는 코드 만들어줘
+
+2단계: pandas로 엑셀 파일을 읽는 파이썬 코드를 작성하세요
+
+3단계: pandas로 엑셀 파일을 읽는 파이썬 코드를 작성하세요.
+파일이 없는 경우, 시트가 없을 경우 에러 처리 포함
+
+4단계: 다음 요구사항을 만족하는 파이썬 코드를 작성하세요
+- 기능: 엑셀 파일 읽기 + 기본 전처리
+- 예외처리: 파일 없음, 시트 없음, 데이터 없음
+- 주석: 한국어, 각 함수 docstring 포함
+- 출력: 처리 완료 메시지 및 요약 통계
+
+5단계 (최고): 초보자 파이썬 개발자로서,
+실무에 바로 쓸 수 있고 초보자도 이해할 수 있는
+엑셀 처리 코드를 작성해줘
+(에러처리·주석·실행예시 모두 포함)</code></pre></div>
                 </div>
             </section>
         </article>
