@@ -693,11 +693,11 @@ function showFortunePopup(cookieEl) {
     const docTop  = rect.top  + window.scrollY;
     const docLeft = rect.left + window.scrollX;
     let topVal  = docTop - 20;
-    let leftVal = docLeft + rect.width / 2 - 115;
+    let leftVal = docLeft + rect.width / 2 - 135;
     // 팝업이 화면 위로 벗어나면 쿠키 아래에 표시
     if (rect.top - 20 < 8) topVal = docTop + rect.height + 8;
     if (leftVal < window.scrollX + 8) leftVal = window.scrollX + 8;
-    if (leftVal + 230 > window.scrollX + window.innerWidth - 8) leftVal = window.scrollX + window.innerWidth - 238;
+    if (leftVal + 270 > window.scrollX + window.innerWidth - 8) leftVal = window.scrollX + window.innerWidth - 278;
     popup.style.top  = topVal + 'px';
     popup.style.left = leftVal + 'px';
 
