@@ -317,6 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
             aiGenerate();
         }
     });
+
+    initFortuneCookies();
 });
 
 // ===== Unlock Keys =====
@@ -605,4 +607,106 @@ function copyHistoryItem(index, btn) {
         doFallback();
         markCopied();
     }
+}
+
+// ===== Fortune Cookies =====
+function randomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function initFortuneCookies() {
+    if (typeof FORTUNE_DATA === 'undefined') return;
+    const sections = Array.from(document.querySelectorAll('article.chapter section[id]'));
+    if (sections.length < 3) return;
+
+    const total = sections.length;
+    const rawPicks = [
+        Math.floor(total * 0.25) + Math.floor(Math.random() * 3) - 1,
+        Math.floor(total * 0.52) + Math.floor(Math.random() * 3) - 1,
+        Math.floor(total * 0.78) + Math.floor(Math.random() * 3) - 1,
+    ].map(i => Math.max(0, Math.min(total - 1, i)));
+
+    const leftPositions = [
+        15 + Math.random() * 15,
+        62 + Math.random() * 15,
+        35 + Math.random() * 15,
+    ];
+
+    rawPicks.forEach((sectionIdx, n) => {
+        const section = sections[sectionIdx];
+        const wrap = document.createElement('div');
+        wrap.className = 'fortune-cookie-wrap';
+
+        const float = document.createElement('div');
+        float.className = 'fortune-cookie-float';
+        float.style.left = leftPositions[n] + '%';
+        float.style.animationDelay = (n * 0.9) + 's';
+
+        float.innerHTML = `<img src="fortune_cookie.png" alt="포춘쿠키" style="width:90px;cursor:pointer;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.22));display:block;">`;
+
+        float.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showFortunePopup(float);
+        });
+        wrap.appendChild(float);
+        section.after(wrap);
+    });
+
+    document.addEventListener('click', (e) => {
+        const popup = document.getElementById('fortune-popup');
+        if (popup && popup.classList.contains('active') && !popup.contains(e.target)) {
+            closeFortunePopup();
+        }
+    });
+}
+
+function showFortunePopup(cookieEl) {
+    const popup = document.getElementById('fortune-popup');
+    const content = document.getElementById('fortune-content');
+    if (!popup || !content) return;
+
+    const fortune = randomItem(FORTUNE_DATA.fortune);
+    const number  = randomItem(FORTUNE_DATA.number);
+    const item    = randomItem(FORTUNE_DATA.item);
+    const color   = randomItem(FORTUNE_DATA.color);
+
+    content.innerHTML = `
+        <div class="fortune-line">
+            <span class="fortune-label">오늘의 운세</span>
+            <span class="fortune-value">${fortune}</span>
+        </div>
+        <div class="fortune-line">
+            <span class="fortune-label">행운의 숫자</span>
+            <span class="fortune-value">${number}</span>
+        </div>
+        <div class="fortune-line">
+            <span class="fortune-label">행운의 아이템</span>
+            <span class="fortune-value">${item}</span>
+        </div>
+        <div class="fortune-line" style="margin-bottom:0">
+            <span class="fortune-label">행운의 색상</span>
+            <span class="fortune-value">${color}</span>
+        </div>`;
+
+    // position:absolute → 문서 기준 좌표 (뷰포트 + 스크롤)
+    const rect = cookieEl.getBoundingClientRect();
+    const docTop  = rect.top  + window.scrollY;
+    const docLeft = rect.left + window.scrollX;
+    let topVal  = docTop - 20;
+    let leftVal = docLeft + rect.width / 2 - 115;
+    // 팝업이 화면 위로 벗어나면 쿠키 아래에 표시
+    if (rect.top - 20 < 8) topVal = docTop + rect.height + 8;
+    if (leftVal < window.scrollX + 8) leftVal = window.scrollX + 8;
+    if (leftVal + 230 > window.scrollX + window.innerWidth - 8) leftVal = window.scrollX + window.innerWidth - 238;
+    popup.style.top  = topVal + 'px';
+    popup.style.left = leftVal + 'px';
+
+    popup.classList.remove('active');
+    void popup.offsetWidth; // reflow to restart animation
+    popup.classList.add('active');
+}
+
+function closeFortunePopup() {
+    const popup = document.getElementById('fortune-popup');
+    if (popup) popup.classList.remove('active');
 }

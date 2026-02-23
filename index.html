@@ -1955,8 +1955,18 @@ STEP4: 최적 프롬프트 출력
         </article>
     </main>
 
+    <!-- Fortune Cookie Popup (shared) -->
+    <div id="fortune-popup" class="fortune-popup">
+        <div class="fortune-paper">
+            <button class="fortune-close" onclick="closeFortunePopup()">×</button>
+            <div class="fortune-paper-title">🥠 오늘의 포춘쿠키</div>
+            <div id="fortune-content"></div>
+        </div>
+    </div>
+
     <!-- config.js는 로컬 개발용 (gitignore 대상). 배포 시 없으면 Netlify Function 사용 -->
     <script src="js/config.js" onerror="console.log('config.js 없음 → Netlify Function 모드')"></script>
+    <script src="js/fortune-data.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
