@@ -209,19 +209,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scroll sidebar to keep active item visible
     function scrollSidebarToActive() {
+        const chapterList = sidebar.querySelector('.chapter-list');
         const activeSubItem = sidebar.querySelector('.chapter-sub-item.active');
         const activeChapterItem = sidebar.querySelector('.chapter-item.active');
         const target = activeSubItem || activeChapterItem;
-        if (!target) return;
+        if (!target || !chapterList) return;
 
         const targetRect = target.getBoundingClientRect();
-        const sidebarRect = sidebar.getBoundingClientRect();
+        const listRect = chapterList.getBoundingClientRect();
         const padding = 24;
 
-        if (targetRect.top < sidebarRect.top + padding) {
-            sidebar.scrollBy({ top: targetRect.top - sidebarRect.top - padding, behavior: 'smooth' });
-        } else if (targetRect.bottom > sidebarRect.bottom - padding) {
-            sidebar.scrollBy({ top: targetRect.bottom - sidebarRect.bottom + padding, behavior: 'smooth' });
+        if (targetRect.top < listRect.top + padding) {
+            chapterList.scrollBy({ top: targetRect.top - listRect.top - padding, behavior: 'smooth' });
+        } else if (targetRect.bottom > listRect.bottom - padding) {
+            chapterList.scrollBy({ top: targetRect.bottom - listRect.bottom + padding, behavior: 'smooth' });
         }
     }
 
