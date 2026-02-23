@@ -388,6 +388,41 @@ function unlockKeys() {
     }, 380);
 }
 
+// ===== Build full page context for AI =====
+function buildPageContext() {
+    const parts = [];
+
+    document.querySelectorAll('article[id^="chapter-"] section[id]').forEach(sec => {
+        const titleEl = sec.querySelector('.section-title h2');
+        if (!titleEl) return;
+
+        const sectionParts = [`## ${titleEl.textContent.trim()}`];
+
+        // 설명 텍스트 수집 (카드 설명, 일반 문단)
+        sec.querySelectorAll('.card-desc, .section-lead, .pattern-desc, p').forEach(el => {
+            if (el.closest('pre') || el.closest('.code-block') || el.closest('.code-header')) return;
+            const text = el.textContent.trim();
+            if (text.length > 15 && text.length < 600) sectionParts.push(text);
+        });
+
+        // 코드 예시 수집
+        sec.querySelectorAll('pre code').forEach(el => {
+            const text = el.textContent.trim();
+            if (text.length > 20) sectionParts.push('예시:\n' + text);
+        });
+
+        // Before/After 비교 수집
+        sec.querySelectorAll('.key-bad, .key-good, .before-text, .after-text').forEach(el => {
+            const text = el.textContent.trim();
+            if (text.length > 5) sectionParts.push(text);
+        });
+
+        if (sectionParts.length > 1) parts.push(sectionParts.join('\n'));
+    });
+
+    return parts.join('\n\n---\n\n');
+}
+
 // ===== Generate Prompt =====
 async function aiGenerate() {
     const input = document.getElementById('search-input');
@@ -415,21 +450,19 @@ async function aiGenerate() {
     result.textContent = '프롬프트를 생성하고 있습니다...';
     result.classList.add('is-loading');
 
-    // Build full pattern knowledge as context
-    const allPatterns = SECTION_MAP
-        .map(sec => `• ${sec.title}\n  ${sec.description}`)
-        .join('\n\n');
+    // Build full context from page DOM (titles, descriptions, code examples)
+    const allPatterns = buildPageContext();
 
     const systemPrompt = `당신은 프롬프트 엔지니어링 전문가입니다.
 
-아래는 다양한 프롬프트 패턴과 기법들입니다:
+아래는 이 가이드에 수록된 프롬프트 패턴, 기법, 프레임워크 및 실제 예시들입니다:
 
 ${allPatterns}
 
-사용자가 요청한 업무에 대해 위 패턴과 기법들을 자유롭게 조합하여, 해당 업무에 가장 효과적인 맞춤형 프롬프트를 생성해주세요.
+사용자가 요청한 업무에 대해 위 내용을 자유롭게 조합하여, 해당 업무에 가장 효과적인 맞춤형 프롬프트를 생성해주세요.
 
 규칙:
-- 업무의 성격과 목표를 분석하여 가장 적합한 패턴 요소들을 자유롭게 결합하세요
+- 업무의 성격과 목표를 분석하여 가장 적합한 패턴·예시 요소들을 자유롭게 결합하세요
 - 단순히 패턴 하나를 적용하지 말고, 업무에 진짜 필요한 구조로 통합하세요
 - 바로 AI에 붙여넣기 할 수 있는 완성된 프롬프트만 출력하세요
 - 설명이나 부가 텍스트 없이 프롬프트 본문만 반환하세요
