@@ -319,6 +319,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ===== Search Suggestions =====
+    const SUGGESTIONS = [
+        '고객 클레임 이메일에 대한 답장 작성',
+        '영어로 바이어에게 견적서를 요청하는 이메일 작성',
+        '파이썬으로 엑셀 파일 읽는 코드 만들기',
+        '신규 바이어에게 보낼 영문 소개 이메일 초안 작성',
+        '한국 중소기업의 미국 수출 계획서 작성',
+        '수출 제안서 3가지 버전 비교 분석',
+        'FTA 혜택 관련 서류 안내문 작성',
+        '베트남 바이어와의 협상 전략 수립',
+        '제품 마케팅 문구 5가지 생성',
+        '인스타그램 홍보 캡션 작성',
+        '회의 결과 보고서 요약',
+        '비즈니스 제안서 목차 및 초안 작성',
+    ];
+
+    const suggestionsBox = document.getElementById('search-suggestions');
+    const suggestionsList = suggestionsBox.querySelector('.suggestions-list');
+
+    // Populate suggestions list
+    SUGGESTIONS.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        li.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // prevent input blur before fill
+            searchInput.value = text;
+            searchInput.style.height = '90px';
+            hideSuggestions();
+            searchInput.focus();
+        });
+        suggestionsList.appendChild(li);
+    });
+
+    function showSuggestions() {
+        if (searchInput.value.trim() === '') {
+            suggestionsBox.style.display = 'block';
+        }
+    }
+
+    function hideSuggestions() {
+        suggestionsBox.style.display = 'none';
+    }
+
+    searchInput.addEventListener('focus', showSuggestions);
+    searchInput.addEventListener('blur', hideSuggestions);
+    searchInput.addEventListener('input', () => {
+        if (searchInput.value.trim() !== '') {
+            hideSuggestions();
+        } else {
+            showSuggestions();
+        }
+    });
+
     initFortuneCookies();
 });
 
